@@ -1,3 +1,4 @@
+let pedidoGuardado = [];
 const colores = [
 "Blanco","Amarillo","Celeste","Violeta","Azul","Verde","Naranja",
 "Rosa","Negro","Natural","Fuccia","Verde Fluo","Amarillo fluo",
@@ -68,3 +69,4 @@ if(agregado) mensaje+="\n";
 const url="https://api.whatsapp.com/send?phone=5491134505374&text="+encodeURIComponent(mensaje);
 window.open(url,"_blank");
 }
+
