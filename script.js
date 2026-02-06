@@ -1,7 +1,7 @@
 let pedidoGuardado = [];
 const colores = [
 "Blanco","Amarillo","Celeste","Violeta","Azul","Verde","Naranja",
-"Rosa","Negro","Natural","Fuccia","Verde Fluo","Amarillo fluo",
+"Rosa","Rojo","Negro","Natural","Fuccia","Verde Fluo","Amarillo fluo",
 "Naranja Fluo","Violeta Fluo","Verde pastel","Violeta pastel",
 "Rosa pastel","Celeste pastel"
 ];
@@ -98,5 +98,6 @@ alert("No agregaste cantidades");
 /* reset contador */
 prod.querySelectorAll(".numero").forEach(n=>n.innerText="0");
 }
+
 
 
