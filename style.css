@@ -96,6 +96,24 @@ z-index:999;
 body{
 padding-bottom:140px;
 }
+.agregar{
+width:100%;
+padding:18px;
+margin-top:15px;
+font-size:20px;
+font-weight:bold;
+background:#111;
+color:white;
+border:none;
+border-radius:12px;
+cursor:pointer;
+transition:0.2s;
+}
+
+/* efecto al tocar */
+.agregar:active{
+transform:scale(0.97);
+}
 
 /* 📱 MODO CELULAR */
 @media (max-width: 700px){
@@ -103,4 +121,5 @@ padding-bottom:140px;
 grid-template-columns:1fr;
 }
 }
+
 
