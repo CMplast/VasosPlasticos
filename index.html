@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedido de Vasos</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>🛒 Pedido de Vasos</h1>
+<h2 class="aviso">⚠️ 1 unidad = 1 caja</h2>
+
+<!-- VASOS 400 -->
+<div class="producto" data-nombre="Vasos 400cc">
+<h2>Vasos 400cc</h2>
+
+<div class="opciones">
+<select class="tipo">
+<option value="Comun">Comun</option>
+<option value="Glitter">Glitter</option>
+<option value="Estampado">Estampado</option>
+</select>
+
+<select class="tapa">
+<option value="">Sin tapa</option>
+<option value="Tapa lisa">Tapa lisa</option>
+<option value="Tapa domo">Tapa domo</option>
+<option value="Tapa pelota">Tapa pelota</option>
+</select>
+</div>
+
+<div class="colores" id="colores400"></div>
+</div>
+
+<!-- VASOS 500 -->
+<div class="producto" data-nombre="Vasos 500cc">
+<h2>Vasos 500cc</h2>
+
+<div class="opciones">
+<select class="tipo">
+<option value="Comun">Comun</option>
+<option value="Glitter">Glitter</option>
+<option value="Estampado">Estampado</option>
+</select>
+</div>
+
+<div class="colores" id="colores500"></div>
+</div>
+
+<button class="enviar" onclick="enviarWhatsApp()">📲 Enviar pedido por WhatsApp</button>
+
+<script src="script.js"></script>
+</body>
+</html>
