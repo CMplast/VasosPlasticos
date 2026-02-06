@@ -88,3 +88,10 @@ color:white;
 border:none;
 font-weight:bold;
 }
+
+/* 📱 MODO CELULAR */
+@media (max-width: 700px){
+.colores{
+grid-template-columns:1fr;
+}
+}
