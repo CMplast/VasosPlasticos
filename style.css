@@ -77,16 +77,24 @@ text-align:center;
 
 .enviar{
 position:fixed;
-bottom:0;
-left:0;
-right:0;
-width:100%;
-padding:20px;
-font-size:22px;
+bottom:15px;
+left:50%;
+transform:translateX(-50%);
+width:90%;
+max-width:500px;
+padding:18px;
+font-size:20px;
 background:#25D366;
 color:white;
 border:none;
 font-weight:bold;
+border-radius:15px;
+box-shadow:0 6px 20px rgba(0,0,0,0.25);
+z-index:999;
+}
+
+body{
+padding-bottom:140px;
 }
 
 /* 📱 MODO CELULAR */
@@ -95,3 +103,4 @@ font-weight:bold;
 grid-template-columns:1fr;
 }
 }
+
