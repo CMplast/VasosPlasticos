@@ -41,32 +41,54 @@ if(val>0) num.innerText = val-1;
 }
 
 function enviarWhatsApp(){
+
+if(pedidoGuardado.length===0){
+alert("No agregaste nada al pedido");
+return;
+}
+
 let mensaje="PEDIDO MAYORISTA\n\n";
 
-document.querySelectorAll(".producto").forEach(prod=>{
-const nombre = prod.dataset.nombre;
-const tipo = prod.querySelector(".tipo").value;
-const tapa = prod.querySelector(".tapa")?.value || "";
-let agregado=false;
-
-prod.querySelectorAll(".colorItem").forEach(item=>{
-const cantidad = item.querySelector(".numero").innerText;
-if(cantidad>0){
-if(!agregado){
-mensaje+=nombre+" ("+tipo+")";
-if(tapa && nombre==="Vasos 400cc") mensaje+=" - "+tapa;
-mensaje+="\n";
-agregado=true;
-}
-const color = item.childNodes[0].textContent.trim();
-mensaje+=`- ${cantidad} cajas ${color}\n`;
-}
-});
-
-if(agregado) mensaje+="\n";
+pedidoGuardado.forEach(p=>{
+mensaje+=p+"\n";
 });
 
 const url="https://api.whatsapp.com/send?phone=5491134505374&text="+encodeURIComponent(mensaje);
 window.open(url,"_blank");
+}
+
+function agregarAlPedido(btn){
+
+const prod = btn.closest(".producto");
+const nombre = prod.dataset.nombre;
+const tipo = prod.querySelector(".tipo").value;
+const tapa = prod.querySelector(".tapa")?.value || "";
+
+let agregado=false;
+let texto="";
+
+prod.querySelectorAll(".colorItem").forEach(item=>{
+const cantidad = parseInt(item.querySelector(".numero").innerText);
+if(cantidad>0){
+if(!agregado){
+texto+=nombre+" ("+tipo+")";
+if(tapa && nombre==="Vasos 400cc") texto+=" - "+tapa;
+texto+="\n";
+agregado=true;
+}
+const color = item.childNodes[0].textContent.trim();
+texto+=`- ${cantidad} cajas ${color}\n`;
+}
+});
+
+if(agregado){
+pedidoGuardado.push(texto);
+alert("Agregado al pedido ✔️");
+}else{
+alert("No agregaste cantidades");
+}
+
+/* reset contador */
+prod.querySelectorAll(".numero").forEach(n=>n.innerText="0");
 }
 
