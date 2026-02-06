@@ -77,7 +77,14 @@ texto+="\n";
 agregado=true;
 }
 const color = item.childNodes[0].textContent.trim();
-texto+=`- ${cantidad} cajas ${color}\n`;
+let palabra = "cajas";
+
+if(tipo.toLowerCase().includes("glitter")){
+palabra = "tapas";
+}
+
+texto+=`- ${cantidad} ${palabra} ${color}\n`;
+
 }
 });
 
@@ -91,4 +98,5 @@ alert("No agregaste cantidades");
 /* reset contador */
 prod.querySelectorAll(".numero").forEach(n=>n.innerText="0");
 }
+
 
