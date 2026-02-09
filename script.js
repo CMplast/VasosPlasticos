@@ -62,19 +62,26 @@ const cantidad = parseInt(item.querySelector(".numero").innerText);
 
 if(cantidad>0){
 
-let palabra="cajas";
-if(tipo.toLowerCase().includes("glitter")) palabra="tapas";
+let colorElegido = item.childNodes[0].textContent.trim();
+let palabra = "cajas";
+let linea = "";
 
-if(!agregado){
-texto+=`${nombre} (${tipo})\n`;
-agregado=true;
-}
-
-let linea = `- ${cantidad} ${palabra} ${item.childNodes[0].textContent.trim()}`;
+// 👉 SI ES GLITTER = color de tapa
+if(tipo.toLowerCase().includes("glitter")){
+palabra = "tapas";
+linea = `- ${cantidad} ${palabra} ${colorElegido}`;
+}else{
+linea = `- ${cantidad} ${palabra} ${colorElegido}`;
 
 if(tapa) linea += ` con ${tapa}`;
 if(colorTapaFinal && colorTapaFinal!=="Mismo color que vaso"){
 linea += ` ${colorTapaFinal}`;
+}
+}
+
+if(!agregado){
+texto+=`${nombre} (${tipo})\n`;
+agregado=true;
 }
 
 texto+=linea+"\n";
@@ -131,6 +138,7 @@ const url="https://api.whatsapp.com/send?phone=5491134505374&text="+encodeURICom
 window.open(url,"_blank");
 }
 
+/* mostrar input si pone otro color tapa */
 document.querySelectorAll(".colorTapa").forEach(sel=>{
 sel.addEventListener("change",function(){
 const input = this.parentElement.querySelector(".otroColorTapa");
