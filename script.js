@@ -61,6 +61,7 @@ const prod = btn.closest(".producto");
 const nombre = prod.dataset.nombre;
 const tipo = prod.querySelector(".tipo").value;
 const tapa = prod.querySelector(".tapa")?.value || "";
+const colorTapa = prod.querySelector(".colorTapa")?.value || "";
 
 let agregado=false;
 let texto="";
@@ -80,7 +81,13 @@ agregado=true;
 }
 
 const color = item.childNodes[0].textContent.trim();
-texto+=`- ${cantidad} ${palabra} ${color}<br>`;
+let linea = `- ${cantidad} ${palabra} ${color}`;
+
+if(tapa) linea += ` con ${tapa}`;
+if(colorTapa) linea += ` color ${colorTapa}`;
+
+texto += linea + "<br>";
+
 totalCajas += cantidad;
 }
 });
@@ -120,5 +127,6 @@ pedidoGuardado=[];
 totalCajas=0;
 actualizarPanel();
 }
+
 
 
