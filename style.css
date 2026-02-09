@@ -122,4 +122,33 @@ grid-template-columns:1fr;
 }
 }
 
+.instrucciones{
+background:#111;
+color:white;
+padding:18px;
+border-radius:15px;
+margin-top:15px;
+margin-bottom:20px;
+box-shadow:0 6px 15px rgba(0,0,0,0.25);
+}
+
+.instrucciones h3{
+margin-top:0;
+font-size:20px;
+}
+
+.instrucciones p{
+margin:6px 0;
+font-size:15px;
+}
+
+.tip{
+background:red;
+padding:8px;
+border-radius:8px;
+margin-top:10px;
+text-align:center;
+font-weight:bold;
+}
+
 
