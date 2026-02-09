@@ -1,6 +1,5 @@
 let pedidoGuardado = [];
 let totalCajas = 0;
-let pedidoGuardado = [];
 const colores = [
 "Blanco","Amarillo","Celeste","Violeta","Azul","Verde","Naranja",
 "Rosa","Rojo","Negro","Natural","Fuccia","Verde Fluo","Amarillo fluo",
@@ -121,4 +120,5 @@ pedidoGuardado=[];
 totalCajas=0;
 actualizarPanel();
 }
+
 
