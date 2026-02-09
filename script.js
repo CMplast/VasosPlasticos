@@ -1,5 +1,6 @@
 let pedidoGuardado = [];
 let totalCajas = 0;
+
 const colores = [
 "Blanco","Amarillo","Celeste","Violeta","Azul","Verde","Naranja",
 "Rosa","Rojo","Negro","Natural","Fuccia","Verde Fluo","Amarillo fluo",
@@ -41,20 +42,6 @@ let val = parseInt(num.innerText);
 if(val>0) num.innerText = val-1;
 }
 
-function enviarWhatsApp(){
-
-if(pedidoGuardado.length===0){
-alert("Agregá productos primero");
-return;
-}
-
-let mensaje="PEDIDO MAYORISTA\n\n";
-mensaje+=document.getElementById("listaPedido").innerText;
-
-const url="https://api.whatsapp.com/send?phone=5491134505374&text="+encodeURIComponent(mensaje);
-window.open(url,"_blank");
-}
-
 function agregarAlPedido(btn){
 
 const prod = btn.closest(".producto");
@@ -62,6 +49,10 @@ const nombre = prod.dataset.nombre;
 const tipo = prod.querySelector(".tipo").value;
 const tapa = prod.querySelector(".tapa")?.value || "";
 const colorTapa = prod.querySelector(".colorTapa")?.value || "";
+const otroColor = prod.querySelector(".otroColorTapa")?.value || "";
+
+let colorTapaFinal = colorTapa;
+if(colorTapa==="Otro") colorTapaFinal = otroColor;
 
 let agregado=false;
 let texto="";
@@ -75,19 +66,18 @@ let palabra="cajas";
 if(tipo.toLowerCase().includes("glitter")) palabra="tapas";
 
 if(!agregado){
-texto+=`<b>${nombre} (${tipo})</b><br>`;
-if(tapa && nombre==="Vasos 400cc") texto+=`${tapa}<br>`;
+texto+=`${nombre} (${tipo})\n`;
 agregado=true;
 }
 
-const color = item.childNodes[0].textContent.trim();
-let linea = `- ${cantidad} ${palabra} ${color}`;
+let linea = `- ${cantidad} ${palabra} ${item.childNodes[0].textContent.trim()}`;
 
 if(tapa) linea += ` con ${tapa}`;
-if(colorTapa) linea += ` color ${colorTapa}`;
+if(colorTapaFinal && colorTapaFinal!=="Mismo color que vaso"){
+linea += ` ${colorTapaFinal}`;
+}
 
-texto += linea + "<br>";
-
+texto+=linea+"\n";
 totalCajas += cantidad;
 }
 });
@@ -100,7 +90,7 @@ btn.style.background="green";
 
 setTimeout(()=>{
 btn.innerText="➕ Agregar esta tanda al pedido";
-btn.style.background="#25D366";
+btn.style.background="#111";
 },1000);
 
 }else{
@@ -114,9 +104,9 @@ function actualizarPanel(){
 const lista = document.getElementById("listaPedido");
 
 if(pedidoGuardado.length===0){
-lista.innerHTML="Aún no agregaste productos";
+lista.innerText="Aún no agregaste productos";
 }else{
-lista.innerHTML = pedidoGuardado.join("<br>");
+lista.innerText = pedidoGuardado.join("\n");
 }
 
 document.getElementById("totalCajas").innerText = totalCajas;
@@ -128,5 +118,26 @@ totalCajas=0;
 actualizarPanel();
 }
 
+function enviarWhatsApp(){
 
+if(pedidoGuardado.length===0){
+alert("Agregá productos primero");
+return;
+}
 
+let mensaje="PEDIDO MAYORISTA\n\n"+pedidoGuardado.join("\n");
+
+const url="https://api.whatsapp.com/send?phone=5491134505374&text="+encodeURIComponent(mensaje);
+window.open(url,"_blank");
+}
+
+document.querySelectorAll(".colorTapa").forEach(sel=>{
+sel.addEventListener("change",function(){
+const input = this.parentElement.querySelector(".otroColorTapa");
+if(this.value==="Otro"){
+input.style.display="block";
+}else{
+input.style.display="none";
+}
+});
+});
