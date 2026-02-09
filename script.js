@@ -1,4 +1,6 @@
 let pedidoGuardado = [];
+let totalCajas = 0;
+let pedidoGuardado = [];
 const colores = [
 "Blanco","Amarillo","Celeste","Violeta","Azul","Verde","Naranja",
 "Rosa","Rojo","Negro","Natural","Fuccia","Verde Fluo","Amarillo fluo",
@@ -43,15 +45,12 @@ if(val>0) num.innerText = val-1;
 function enviarWhatsApp(){
 
 if(pedidoGuardado.length===0){
-alert("No agregaste nada al pedido");
+alert("Agregá productos primero");
 return;
 }
 
 let mensaje="PEDIDO MAYORISTA\n\n";
-
-pedidoGuardado.forEach(p=>{
-mensaje+=p+"\n";
-});
+mensaje+=document.getElementById("listaPedido").innerText;
 
 const url="https://api.whatsapp.com/send?phone=5491134505374&text="+encodeURIComponent(mensaje);
 window.open(url,"_blank");
@@ -69,35 +68,57 @@ let texto="";
 
 prod.querySelectorAll(".colorItem").forEach(item=>{
 const cantidad = parseInt(item.querySelector(".numero").innerText);
+
 if(cantidad>0){
+
+let palabra="cajas";
+if(tipo.toLowerCase().includes("glitter")) palabra="tapas";
+
 if(!agregado){
-texto+=nombre+" ("+tipo+")";
-if(tapa && nombre==="Vasos 400cc") texto+=" - "+tapa;
-texto+="\n";
+texto+=`<b>${nombre} (${tipo})</b><br>`;
+if(tapa && nombre==="Vasos 400cc") texto+=`${tapa}<br>`;
 agregado=true;
 }
+
 const color = item.childNodes[0].textContent.trim();
-let palabra = "cajas";
-
-if(tipo.toLowerCase().includes("glitter")){
-palabra = "tapas";
-}
-
-texto+=`- ${cantidad} ${palabra} ${color}\n`;
-
+texto+=`- ${cantidad} ${palabra} ${color}<br>`;
+totalCajas += cantidad;
 }
 });
 
 if(agregado){
 pedidoGuardado.push(texto);
-alert("Agregado al pedido ✔️");
+actualizarPanel();
+btn.innerText="✔ Agregado";
+btn.style.background="green";
+
+setTimeout(()=>{
+btn.innerText="➕ Agregar esta tanda al pedido";
+btn.style.background="#25D366";
+},1000);
+
 }else{
 alert("No agregaste cantidades");
 }
 
-/* reset contador */
 prod.querySelectorAll(".numero").forEach(n=>n.innerText="0");
 }
 
+function actualizarPanel(){
+const lista = document.getElementById("listaPedido");
 
+if(pedidoGuardado.length===0){
+lista.innerHTML="Aún no agregaste productos";
+}else{
+lista.innerHTML = pedidoGuardado.join("<br>");
+}
+
+document.getElementById("totalCajas").innerText = totalCajas;
+}
+
+function borrarPedido(){
+pedidoGuardado=[];
+totalCajas=0;
+actualizarPanel();
+}
 
