@@ -5,6 +5,8 @@ const colores = [
 "Rosa pastel","Celeste pastel"
 ];
 
+let pedidoGuardado=[];
+
 function crearColores(id){
 const cont = document.getElementById(id);
 
@@ -13,8 +15,8 @@ const div = document.createElement("div");
 div.className="colorItem";
 
 div.innerHTML=`
-<span class="nombreColor">${color}</span>
-<div class="contador">
+<span>${color}</span>
+<div>
 <button onclick="restar(this)">-</button>
 <span class="numero">0</span>
 <button onclick="sumar(this)">+</button>
@@ -35,54 +37,78 @@ num.innerText = parseInt(num.innerText)+1;
 
 function restar(btn){
 const num = btn.parentElement.querySelector(".numero");
-let val = parseInt(num.innerText);
-if(val>0) num.innerText = val-1;
+let val=parseInt(num.innerText);
+if(val>0) num.innerText=val-1;
 }
 
-function enviarWhatsApp(){
+function guardarPedido(tipoVaso){
 
-let mensaje="🛒 PEDIDO MAYORISTA\n";
-mensaje+="⚠️ 1 unidad = 1 caja\n\n";
+let bloque="";
 
-document.querySelectorAll(".producto").forEach(prod=>{
+const prod = tipoVaso==="400"
+? document.querySelector('[data-nombre="Vasos 400cc"]')
+: document.querySelector('[data-nombre="Vasos 500cc"]');
+
 const nombre = prod.dataset.nombre;
 const tipo = prod.querySelector(".tipo").value;
 const tapa = prod.querySelector(".tapa")?.value || "";
 
-let agregado=false;
-
 prod.querySelectorAll(".colorItem").forEach(item=>{
-const cantidad = item.querySelector(".numero").innerText;
+const cant=item.querySelector(".numero").innerText;
 
-if(cantidad>0){
-if(!agregado){
-mensaje+=`*${nombre}*`;
-if(tipo!=="Comun") mensaje+=` (${tipo})`;
-if(tapa && nombre==="Vasos 400cc") mensaje+=` - ${tapa}`;
-mensaje+="\n";
-agregado=true;
+if(cant>0){
+if(bloque===""){
+bloque+=`${nombre}`;
+if(tipo!=="Comun") bloque+=` (${tipo})`;
+if(tapa && nombre==="Vasos 400cc") bloque+=` - ${tapa}`;
+bloque+="\n";
 }
 
-const color = item.querySelector(".nombreColor").innerText;
-mensaje+=`• ${cantidad} cajas ${color}\n`;
+const color=item.querySelector("span").innerText;
+bloque+=`• ${cant} cajas ${color}\n`;
 }
 });
 
-if(agregado) mensaje+="\n";
-});
-
-if(mensaje==="🛒 PEDIDO MAYORISTA\n⚠️ 1 unidad = 1 caja\n\n"){
-alert("Agregá productos antes de enviar");
+if(bloque===""){
+alert("No agregaste nada");
 return;
 }
 
-// 📲 ENVIA A LOS 2 NUMEROS
+pedidoGuardado.push(bloque);
+actualizarLista();
+resetear(prod);
+}
+
+function actualizarLista(){
+const lista=document.getElementById("listaPedido");
+lista.innerHTML="";
+
+pedidoGuardado.forEach(p=>{
+const div=document.createElement("div");
+div.innerText=p;
+lista.appendChild(div);
+});
+}
+
+function resetear(prod){
+prod.querySelectorAll(".numero").forEach(n=>n.innerText="0");
+}
+
+function enviarWhatsApp(){
+
+if(pedidoGuardado.length===0){
+alert("No hay pedido");
+return;
+}
+
+let mensaje="PEDIDO MAYORISTA\n\n";
+pedidoGuardado.forEach(p=>mensaje+=p+"\n");
+
 const num1="5491134505374";
 const num2="5491165032943";
 
-const url1=`https://api.whatsapp.com/send?phone=${num1}&text=${encodeURIComponent(mensaje)}`;
-const url2=`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`;
-
-window.open(url1,"_blank");
-setTimeout(()=>{window.open(url2,"_blank");},800);
+window.open(`https://api.whatsapp.com/send?phone=${num1}&text=${encodeURIComponent(mensaje)}`,"_blank");
+setTimeout(()=>{
+window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
+},800);
 }
