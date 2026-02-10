@@ -4,63 +4,193 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pedido de Vasos</title>
-<link rel="stylesheet" href="style.css">
+
+<style>
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background:#111;
+    color:#fff;
+    padding:20px;
+}
+
+/* CONTENEDOR */
+.container{
+    max-width:700px;
+    margin:auto;
+}
+
+/* PRODUCTO */
+.producto{
+    background:#1b1b1b;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+/* BOTONES + - */
+.controles{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+button{
+    background:#2a2a2a;
+    border:none;
+    color:#fff;
+    padding:10px 14px;
+    font-size:18px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#444;
+}
+
+/* PEDIDO ACTUAL */
+#pedido{
+    background:#1b1b1b;
+    padding:15px;
+    border-radius:12px;
+    margin-top:20px;
+}
+
+/* INSTRUCCIONES */
+.instrucciones{
+    background:#161616;
+    border-left:4px solid #00c853;
+    padding:12px;
+    margin-bottom:10px;
+    border-radius:8px;
+    font-size:14px;
+}
+
+/* BOTON WHATSAPP */
+.wsp{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#25D366;
+    color:white;
+    padding:15px 18px;
+    border-radius:50px;
+    font-size:16px;
+    text-decoration:none;
+    font-weight:bold;
+    box-shadow:0 0 15px rgba(0,0,0,0.5);
+}
+</style>
 </head>
 
 <body>
 
-<h1>🛒 Pedido de Vasos</h1>
-<h2 class="aviso">⚠️ 1 unidad = 1 caja</h2>
+<div class="container">
 
-<!-- LISTA PEDIDO -->
-<div class="pedidoActual">
-<h2>📦 Pedido actual</h2>
-<div id="listaPedido">Aún no hay productos</div>
+<h2>🛒 Armá tu pedido</h2>
+
+<div class="producto">
+    <div>
+        <b>Vasos Comunes</b><br>
+        Rojo tapa blanca
+    </div>
+    <div class="controles">
+        <button onclick="cambiar('comun',-1)">-</button>
+        <span id="comun">0</span>
+        <button onclick="cambiar('comun',1)">+</button>
+    </div>
 </div>
 
-<!-- VASOS 400 -->
-<div class="producto" data-nombre="Vasos 400cc">
-<h2>Vasos 400cc</h2>
-
-<div class="opciones">
-<select class="tipo">
-<option value="Comun">Comun</option>
-<option value="Glitter">Glitter</option>
-<option value="Estampado">Estampado</option>
-</select>
-
-<select class="tapa">
-<option value="">Sin tapa</option>
-<option value="Tapa lisa">Tapa lisa</option>
-<option value="Tapa domo">Tapa domo</option>
-<option value="Tapa pelota">Tapa pelota</option>
-</select>
+<div class="producto">
+    <div>
+        <b>Vasos Glitter</b><br>
+        Tapa negra
+    </div>
+    <div class="controles">
+        <button onclick="cambiar('glitter',-1)">-</button>
+        <span id="glitter">0</span>
+        <button onclick="cambiar('glitter',1)">+</button>
+    </div>
 </div>
 
-<div class="colores" id="colores400"></div>
-<button class="guardar" onclick="guardarPedido('400')">💾 Guardar pedido 400</button>
+<!-- PEDIDO -->
+<div id="pedido">
+
+<div class="instrucciones">
+📌 <b>Instrucciones:</b><br>
+1. Tocá + para agregar vasos.<br>
+2. Tocá − para quitar.<br>
+3. Cuando termines, enviá el pedido por WhatsApp.<br>
+4. Mínimo sugerido: packs de 50 unidades.
 </div>
 
-<!-- VASOS 500 -->
-<div class="producto" data-nombre="Vasos 500cc">
-<h2>Vasos 500cc</h2>
+<h3>Pedido actual:</h3>
+<div id="listaPedido">Aún sin productos</div>
 
-<div class="opciones">
-<select class="tipo">
-<option value="Comun">Comun</option>
-<option value="Glitter">Glitter</option>
-<option value="Estampado">Estampado</option>
-</select>
 </div>
 
-<div class="colores" id="colores500"></div>
-<button class="guardar" onclick="guardarPedido('500')">💾 Guardar pedido 500</button>
 </div>
 
-<!-- BOTON FLOTANTE -->
-<button class="btn-wsp" onclick="enviarWhatsApp()">📲 Enviar pedido</button>
+<!-- BOTON WHATSAPP -->
+<a class="wsp" onclick="enviarWhats()">Enviar pedido</a>
 
-<script src="script.js"></script>
+<script>
+let pedido = {
+    comun:0,
+    glitter:0
+};
+
+function cambiar(tipo,cantidad){
+    pedido[tipo]+=cantidad;
+    if(pedido[tipo]<0) pedido[tipo]=0;
+
+    document.getElementById(tipo).innerText=pedido[tipo];
+    actualizarPedido();
+}
+
+function actualizarPedido(){
+    let texto="";
+
+    if(pedido.comun>0){
+        texto+= pedido.comun + " vasos comunes\n";
+    }
+
+    if(pedido.glitter>0){
+        texto+= pedido.glitter + " vasos glitter\n";
+    }
+
+    if(texto==""){
+        texto="Aún sin productos";
+    }
+
+    document.getElementById("listaPedido").innerText=texto;
+}
+
+function enviarWhats(){
+    let mensaje="Hola, quiero pedir:\n";
+
+    if(pedido.comun>0){
+        mensaje+= pedido.comun + " vasos comunes\n";
+    }
+
+    if(pedido.glitter>0){
+        mensaje+= pedido.glitter + " vasos glitter\n";
+    }
+
+    if(pedido.comun==0 && pedido.glitter==0){
+        alert("Agregá productos primero");
+        return;
+    }
+
+    let numero="5491123456789"; // CAMBIAR POR TU NUMERO
+    let url="https://wa.me/"+numero+"?text="+encodeURIComponent(mensaje);
+
+    window.open(url,"_blank");
+}
+</script>
+
 </body>
 </html>
-
