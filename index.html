@@ -12,23 +12,6 @@
 <h1>🛒 Pedido de Vasos</h1>
 <h2 class="aviso">⚠️ 1 unidad = 1 caja</h2>
 
-<div class="panelPedido">
-<h2>🧾 Tu pedido actual</h2>
-<div id="listaPedido">Aún no agregaste productos</div>
-<div class="total">Total cajas: <span id="totalCajas">0</span></div>
-<button class="borrar" onclick="borrarPedido()">🗑 Vaciar pedido</button>
-</div>
-
-<div class="instrucciones">
-<h3>📌 Cómo hacer el pedido</h3>
-<p>1️⃣ Elegí tipo de vaso</p>
-<p>2️⃣ Elegí tapa y color de tapa</p>
-<p>3️⃣ Sumá colores con +</p>
-<p>4️⃣ Tocá "Agregar esta tanda"</p>
-<p>5️⃣ Repetí si querés más</p>
-<p>6️⃣ Enviar por WhatsApp</p>
-</div>
-
 <!-- VASOS 400 -->
 <div class="producto" data-nombre="Vasos 400cc">
 <h2>Vasos 400cc</h2>
@@ -42,28 +25,13 @@
 
 <select class="tapa">
 <option value="">Sin tapa</option>
-<option value="Tapa plana">Tapa plana</option>
+<option value="Tapa lisa">Tapa lisa</option>
 <option value="Tapa domo">Tapa domo</option>
 <option value="Tapa pelota">Tapa pelota</option>
 </select>
-
-<select class="colorTapa">
-<option value="">Color tapa</option>
-<option value="Mismo color que vaso">Mismo color que vaso</option>
-<option value="Blanca">Blanca</option>
-<option value="Negra">Negra</option>
-<option value="Transparente">Transparente</option>
-<option value="Otro">Otro color</option>
-</select>
-
-<input type="text" class="otroColorTapa" placeholder="Escribir color de tapa" style="display:none;">
 </div>
 
 <div class="colores" id="colores400"></div>
-
-<button class="agregar" onclick="agregarAlPedido(this)">
-➕ Agregar esta tanda al pedido
-</button>
 </div>
 
 <!-- VASOS 500 -->
@@ -76,32 +44,12 @@
 <option value="Glitter">Glitter</option>
 <option value="Estampado">Estampado</option>
 </select>
-
-<select class="tapa">
-<option value="">Sin tapa</option>
-<option value="Tapa plana">Tapa plana</option>
-</select>
-
-<select class="colorTapa">
-<option value="">Color tapa</option>
-<option value="Mismo color que vaso">Mismo color que vaso</option>
-<option value="Blanca">Blanca</option>
-<option value="Negra">Negra</option>
-<option value="Transparente">Transparente</option>
-<option value="Otro">Otro color</option>
-</select>
-
-<input type="text" class="otroColorTapa" placeholder="Escribir color de tapa" style="display:none;">
 </div>
 
 <div class="colores" id="colores500"></div>
-
-<button class="agregar" onclick="agregarAlPedido(this)">
-➕ Agregar esta tanda al pedido
-</button>
 </div>
 
-<button class="enviar" onclick="enviarWhatsApp()">📲 Enviar pedido por WhatsApp</button>
+<button class="enviar" onclick="enviarWhatsApp()">📲 ENVIAR PEDIDO POR WHATSAPP</button>
 
 <script src="script.js"></script>
 </body>
