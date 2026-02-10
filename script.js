@@ -1,100 +1,88 @@
-// ====== PEDIDO TOTAL ======
-let pedido = [];
+const colores = [
+"Blanco","Amarillo","Celeste","Violeta","Azul","Verde","Naranja",
+"Rosa","Negro","Natural","Fuccia","Verde Fluo","Amarillo fluo",
+"Naranja Fluo","Violeta Fluo","Verde pastel","Violeta pastel",
+"Rosa pastel","Celeste pastel"
+];
 
-// ====== CAMBIAR VISUAL SEGUN TIPO ======
-function cambiarTipo() {
-  const tipo = document.getElementById("tipoVaso").value;
-  const contColorVaso = document.getElementById("bloqueColorVaso");
-  const textoGlitter = document.getElementById("avisoGlitter");
+function crearColores(id){
+const cont = document.getElementById(id);
 
-  if (tipo === "glitter") {
-    contColorVaso.style.display = "none";
-    textoGlitter.style.display = "block";
-  } else {
-    contColorVaso.style.display = "block";
-    textoGlitter.style.display = "none";
-  }
+colores.forEach(color=>{
+const div = document.createElement("div");
+div.className="colorItem";
+
+div.innerHTML=`
+<span class="nombreColor">${color}</span>
+<div class="contador">
+<button onclick="restar(this)">-</button>
+<span class="numero">0</span>
+<button onclick="sumar(this)">+</button>
+</div>
+`;
+
+cont.appendChild(div);
+});
 }
 
-// ====== AGREGAR CANTIDAD + - ======
-function cambiarCantidad(valor) {
-  const input = document.getElementById("cantidad");
-  let num = parseInt(input.value) || 0;
-  num += valor;
-  if (num < 0) num = 0;
-  input.value = num;
+crearColores("colores400");
+crearColores("colores500");
+
+function sumar(btn){
+const num = btn.parentElement.querySelector(".numero");
+num.innerText = parseInt(num.innerText)+1;
 }
 
-// ====== AGREGAR TANDA ======
-function agregarTanda() {
-  const tipo = document.getElementById("tipoVaso").value;
-  const colorVaso = document.getElementById("colorVaso").value;
-  const colorTapa = document.getElementById("colorTapa").value;
-  const cantidad = parseInt(document.getElementById("cantidad").value);
-
-  if (!cantidad || cantidad <= 0) {
-    alert("Agregá cantidad primero");
-    return;
-  }
-
-  let texto = "";
-
-  if (tipo === "glitter") {
-    texto = cantidad + " vasos GLITTER tapa " + colorTapa;
-  } else {
-    texto = cantidad + " vasos " + tipo + " color " + colorVaso + " tapa " + colorTapa;
-  }
-
-  pedido.push(texto);
-
-  actualizarLista();
-
-  // reset cantidad
-  document.getElementById("cantidad").value = 0;
+function restar(btn){
+const num = btn.parentElement.querySelector(".numero");
+let val = parseInt(num.innerText);
+if(val>0) num.innerText = val-1;
 }
 
-// ====== MOSTRAR LISTA ======
-function actualizarLista() {
-  const lista = document.getElementById("listaPedido");
-  lista.innerHTML = "";
+function enviarWhatsApp(){
 
-  pedido.forEach((p, index) => {
-    lista.innerHTML += `
-      <div class="itemPedido">
-        ${p}
-        <button onclick="eliminarItem(${index})" class="btnEliminar">❌</button>
-      </div>
-    `;
-  });
+let mensaje="🛒 PEDIDO MAYORISTA\n";
+mensaje+="⚠️ 1 unidad = 1 caja\n\n";
+
+document.querySelectorAll(".producto").forEach(prod=>{
+const nombre = prod.dataset.nombre;
+const tipo = prod.querySelector(".tipo").value;
+const tapa = prod.querySelector(".tapa")?.value || "";
+
+let agregado=false;
+
+prod.querySelectorAll(".colorItem").forEach(item=>{
+const cantidad = item.querySelector(".numero").innerText;
+
+if(cantidad>0){
+if(!agregado){
+mensaje+=`*${nombre}*`;
+if(tipo!=="Comun") mensaje+=` (${tipo})`;
+if(tapa && nombre==="Vasos 400cc") mensaje+=` - ${tapa}`;
+mensaje+="\n";
+agregado=true;
 }
 
-// ====== ELIMINAR ITEM ======
-function eliminarItem(i) {
-  pedido.splice(i, 1);
-  actualizarLista();
+const color = item.querySelector(".nombreColor").innerText;
+mensaje+=`• ${cantidad} cajas ${color}\n`;
 }
-
-// ====== ENVIAR WHATSAPP ======
-function enviarPedido() {
-  if (pedido.length === 0) {
-    alert("Agregá al menos una tanda");
-    return;
-  }
-
-  let mensaje = "Hola, quiero pedir:%0A%0A";
-
-  pedido.forEach(p => {
-    mensaje += "• " + p + "%0A";
-  });
-
-  // CAMBIA ESTE NUMERO POR EL TUYO
-  const numero = "5491126675200";
-
-  window.open(`https://wa.me/${numero}?text=${mensaje}`, "_blank");
-}
-
-// ====== INICIO ======
-document.addEventListener("DOMContentLoaded", () => {
-  cambiarTipo();
 });
 
+if(agregado) mensaje+="\n";
+});
+
+if(mensaje==="🛒 PEDIDO MAYORISTA\n⚠️ 1 unidad = 1 caja\n\n"){
+alert("Agregá productos antes de enviar");
+return;
+}
+
+// 📲 ENVIA A LOS 2 NUMEROS
+const num1="5491134505374";
+const num2="5491165032943";
+
+const url1=`https://api.whatsapp.com/send?phone=${num1}&text=${encodeURIComponent(mensaje)}`;
+const url2=`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`;
+
+window.open(url1,"_blank");
+setTimeout(()=>{window.open(url2,"_blank");},800);
+}
