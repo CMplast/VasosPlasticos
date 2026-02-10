@@ -193,6 +193,33 @@ padding:10px;
 }
 }
 
+/* ARREGLO DEFINITIVO CELULAR */
+@media (max-width:600px){
+
+.pedidoHeader{
+display:flex !important;
+flex-direction:row !important;
+justify-content:space-between !important;
+align-items:center !important;
+flex-wrap:nowrap !important;
+width:100%;
+}
+
+.pedidoHeader h2{
+margin:0 !important;
+font-size:18px;
+white-space:nowrap;
+}
+
+.borrarPedido{
+margin:0 !important;
+padding:8px 12px;
+font-size:14px;
+white-space:nowrap;
+}
+}
+
+
 
 
 
