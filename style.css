@@ -219,6 +219,36 @@ white-space:nowrap;
 }
 }
 
+/* HEADER PEDIDO EN UNA SOLA FILA (celular) */
+.pedidoHeader{
+display:flex;
+justify-content:space-between;
+align-items:center;
+width:100%;
+}
+
+/* ARREGLO SOLO CELULAR */
+@media (max-width:600px){
+
+.pedidoHeader{
+flex-direction:row !important;
+flex-wrap:nowrap !important;
+align-items:center !important;
+}
+
+.pedidoHeader h2{
+margin:0;
+font-size:18px;
+}
+
+.borrarPedido{
+width:auto !important;   /* ← ESTE ERA EL PROBLEMA */
+padding:8px 12px;
+font-size:14px;
+margin:0;
+}
+}
+
 
 
 
