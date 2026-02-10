@@ -16,7 +16,7 @@ div.className="colorItem";
 
 div.innerHTML=`
 <span>${color}</span>
-<div>
+<div class="contador">
 <button onclick="restar(this)">-</button>
 <span class="numero">0</span>
 <button onclick="sumar(this)">+</button>
