@@ -12,6 +12,12 @@
 <h1>🛒 Pedido de Vasos</h1>
 <h2 class="aviso">⚠️ 1 unidad = 1 caja</h2>
 
+<!-- LISTA PEDIDO -->
+<div class="pedidoActual">
+<h2>📦 Pedido actual</h2>
+<div id="listaPedido"></div>
+</div>
+
 <!-- VASOS 400 -->
 <div class="producto" data-nombre="Vasos 400cc">
 <h2>Vasos 400cc</h2>
@@ -32,6 +38,7 @@
 </div>
 
 <div class="colores" id="colores400"></div>
+<button class="guardar" onclick="guardarPedido('400')">💾 Guardar pedido 400</button>
 </div>
 
 <!-- VASOS 500 -->
@@ -47,9 +54,10 @@
 </div>
 
 <div class="colores" id="colores500"></div>
+<button class="guardar" onclick="guardarPedido('500')">💾 Guardar pedido 500</button>
 </div>
 
-<button class="enviar" onclick="enviarWhatsApp()">📲 ENVIAR PEDIDO POR WHATSAPP</button>
+<button class="enviar" onclick="enviarWhatsApp()">📲 ENVIAR TODO POR WHATSAPP</button>
 
 <script src="script.js"></script>
 </body>
