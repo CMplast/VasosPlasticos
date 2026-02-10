@@ -1,57 +1,67 @@
 body{
 font-family: Arial, sans-serif;
-background:#f5f6fa;
+background:#f2f3f7;
 padding:15px;
 margin:0;
 }
 
 h1{
 text-align:center;
+margin-bottom:5px;
 }
 
 .aviso{
-background:red;
+background:#ff3b3b;
 color:white;
-padding:12px;
-border-radius:10px;
+padding:15px;
+border-radius:12px;
 text-align:center;
-font-size:22px;
+font-size:24px;
+font-weight:bold;
+margin-bottom:20px;
 }
 
 .producto{
 background:white;
 padding:15px;
 margin-top:20px;
-border-radius:15px;
-box-shadow:0 4px 10px rgba(0,0,0,0.15);
+border-radius:18px;
+box-shadow:0 6px 18px rgba(0,0,0,0.15);
+}
+
+.producto h2{
+margin-top:0;
 }
 
 .opciones{
 display:flex;
 gap:10px;
 margin-bottom:15px;
+flex-wrap:wrap;
 }
 
 select{
-padding:8px;
-border-radius:8px;
+padding:10px;
+border-radius:10px;
 border:1px solid #ccc;
+font-size:16px;
 }
 
 .colores{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:10px;
+gap:12px;
 }
 
 .colorItem{
 background:#fafafa;
-padding:10px;
-border-radius:12px;
+padding:12px;
+border-radius:14px;
 display:flex;
 justify-content:space-between;
 align-items:center;
 font-weight:bold;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
 .contador{
@@ -64,162 +74,30 @@ gap:10px;
 background:black;
 color:white;
 border:none;
-padding:8px 14px;
-font-size:18px;
-border-radius:8px;
+padding:10px 16px;
+font-size:20px;
+border-radius:10px;
+font-weight:bold;
 }
 
 .numero{
-font-size:18px;
-width:25px;
+font-size:20px;
+width:30px;
 text-align:center;
+font-weight:bold;
 }
 
 .enviar{
 position:fixed;
-bottom:15px;
-left:50%;
-transform:translateX(-50%);
-width:90%;
-max-width:500px;
-padding:18px;
-font-size:20px;
+bottom:0;
+left:0;
+right:0;
+width:100%;
+padding:22px;
+font-size:24px;
 background:#25D366;
 color:white;
 border:none;
 font-weight:bold;
-border-radius:15px;
-box-shadow:0 6px 20px rgba(0,0,0,0.25);
-z-index:999;
-}
-
-body{
-padding-bottom:140px;
-}
-.agregar{
-width:100%;
-padding:18px;
-margin-top:15px;
-font-size:20px;
-font-weight:bold;
-background:#111;
-color:white;
-border:none;
-border-radius:12px;
-cursor:pointer;
-transition:0.2s;
-}
-
-/* efecto al tocar */
-.agregar:active{
-transform:scale(0.97);
-}
-
-/* 📱 MODO CELULAR */
-@media (max-width: 700px){
-.colores{
-grid-template-columns:1fr;
-}
-}
-
-.instrucciones{
-background:#111;
-color:white;
-padding:18px;
-border-radius:15px;
-margin-top:15px;
-margin-bottom:20px;
-box-shadow:0 6px 15px rgba(0,0,0,0.25);
-}
-
-.instrucciones h3{
-margin-top:0;
-font-size:20px;
-}
-
-.instrucciones p{
-margin:6px 0;
-font-size:15px;
-}
-
-.tip{
-background:red;
-padding:8px;
-border-radius:8px;
-margin-top:10px;
-text-align:center;
-font-weight:bold;
-}
-
-.contador button{
-background:black;
-color:white;
-border:none;
-padding:8px 14px;
-font-size:18px;
-border-radius:8px;
-transition:0.15s;
-}
-
-/* animación */
-.contador button:active{
-transform:scale(0.85);
-}
-
-.producto{
-animation:aparecer 0.6s ease;
-}
-
-@keyframes aparecer{
-from{
-opacity:0;
-transform:translateY(20px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-.agregar{
-transition:0.2s;
-}
-
-.agregar:active{
-transform:scale(0.96);
-}
-
-.panelPedido{
-background:#0f172a;
-color:white;
-padding:20px;
-border-radius:15px;
-margin-bottom:20px;
-box-shadow:0 8px 25px rgba(0,0,0,0.3);
-}
-
-.panelPedido h2{
-margin-top:0;
-}
-
-#listaPedido{
-font-size:14px;
-margin-bottom:10px;
-}
-
-.total{
-font-size:20px;
-font-weight:bold;
-margin-top:10px;
-}
-
-.borrar{
-width:100%;
-margin-top:10px;
-padding:12px;
-background:red;
-color:white;
-border:none;
-border-radius:10px;
-font-weight:bold;
+box-shadow:0 -4px 15px rgba(0,0,0,0.2);
 }
