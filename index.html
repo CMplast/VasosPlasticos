@@ -3,208 +3,64 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CMPlast pedidos</title>
-
-<style>
-body{
-    font-family: Arial, Helvetica, sans-serif;
-    background:#ffffff;
-    margin:0;
-    padding:20px;
-}
-
-/* CONTENEDOR */
-.container{
-    max-width:900px;
-    margin:auto;
-}
-
-/* PRODUCTO */
-.producto{
-    border:1px solid #ddd;
-    border-radius:10px;
-    padding:12px;
-    margin-bottom:12px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-/* CONTROLES */
-.controles{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-button{
-    padding:8px 14px;
-    font-size:18px;
-    border:none;
-    background:#111;
-    color:#fff;
-    border-radius:6px;
-    cursor:pointer;
-}
-
-button:hover{
-    background:#333;
-}
-
-/* PEDIDO */
-#pedido{
-    margin-top:30px;
-    padding:15px;
-    border:2px solid #111;
-    border-radius:10px;
-}
-
-/* INSTRUCCIONES */
-.instrucciones{
-    background:#f4f4f4;
-    padding:10px;
-    border-radius:8px;
-    margin-bottom:10px;
-}
-
-/* BOTON WHATSAPP */
-.wsp{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    background:#25D366;
-    color:white;
-    padding:16px 20px;
-    border-radius:50px;
-    font-size:16px;
-    text-decoration:none;
-    font-weight:bold;
-}
-</style>
+<title>Pedido de Vasos</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="container">
+<h1>🛒 Pedido de Vasos</h1>
+<h2 class="aviso">⚠️ 1 unidad = 1 caja</h2>
 
-<h2>Elegí tus vasos</h2>
-
-<!-- COLORES COMUNES -->
-<h3>Vasos comunes (tapa blanca)</h3>
-
-<div id="listaColores"></div>
-
-<!-- GLITTER -->
-<h3>Vasos glitter (tapa negra)</h3>
-
-<div class="producto">
-    <div>Glitter (color fijo)</div>
-    <div class="controles">
-        <button onclick="cambiar('glitter',-1)">-</button>
-        <span id="glitter">0</span>
-        <button onclick="cambiar('glitter',1)">+</button>
-    </div>
+<!-- LISTA PEDIDO -->
+<div class="pedidoActual">
+<h2>📦 Pedido actual</h2>
+<div id="listaPedido">Aún no hay productos</div>
 </div>
 
-<!-- PEDIDO -->
-<div id="pedido">
+<!-- VASOS 400 -->
+<div class="producto" data-nombre="Vasos 400cc">
+<h2>Vasos 400cc</h2>
 
-<div class="instrucciones">
-1. Apretá + para agregar vasos.<br>
-2. Apretá − para quitar.<br>
-3. Cuando termines tocá ENVIAR PEDIDO.
+<div class="opciones">
+<select class="tipo">
+<option value="Comun">Comun</option>
+<option value="Glitter">Glitter</option>
+<option value="Estampado">Estampado</option>
+</select>
+
+<select class="tapa">
+<option value="">Sin tapa</option>
+<option value="Tapa lisa">Tapa lisa</option>
+<option value="Tapa domo">Tapa domo</option>
+<option value="Tapa pelota">Tapa pelota</option>
+</select>
 </div>
 
-<h3>Pedido actual:</h3>
-<div id="listaPedido">Aún sin productos</div>
-
+<div class="colores" id="colores400"></div>
+<button class="guardar" onclick="guardarPedido('400')">💾 Guardar pedido 400</button>
 </div>
 
+<!-- VASOS 500 -->
+<div class="producto" data-nombre="Vasos 500cc">
+<h2>Vasos 500cc</h2>
+
+<div class="opciones">
+<select class="tipo">
+<option value="Comun">Comun</option>
+<option value="Glitter">Glitter</option>
+<option value="Estampado">Estampado</option>
+</select>
 </div>
 
-<a class="wsp" onclick="enviarWhats()">Enviar pedido</a>
+<div class="colores" id="colores500"></div>
+<button class="guardar" onclick="guardarPedido('500')">💾 Guardar pedido 500</button>
+</div>
 
-<script>
-/* ===== COLORES ===== */
-let colores = [
-"Rojo","Azul","Verde","Amarillo","Negro",
-"Blanco","Rosa","Violeta","Naranja","Celeste",
-"Dorado","Plateado","Fucsia","Lima","Bordo",
-"Turquesa","Gris","Marron","Transparente","Coral"
-];
+<!-- BOTON FLOTANTE -->
+<button class="btn-wsp" onclick="enviarWhatsApp()">📲 Enviar pedido</button>
 
-let pedido = {};
-colores.forEach(c=>pedido[c]=0);
-pedido["glitter"]=0;
-
-/* CREAR LISTA COLORES */
-let contenedor = document.getElementById("listaColores");
-
-colores.forEach(color=>{
-    contenedor.innerHTML += `
-    <div class="producto">
-        <div>${color}</div>
-        <div class="controles">
-            <button onclick="cambiar('${color}',-1)">-</button>
-            <span id="${color}">0</span>
-            <button onclick="cambiar('${color}',1)">+</button>
-        </div>
-    </div>
-    `;
-});
-
-/* CAMBIAR CANTIDAD */
-function cambiar(tipo,cantidad){
-    pedido[tipo]+=cantidad;
-    if(pedido[tipo]<0) pedido[tipo]=0;
-
-    document.getElementById(tipo).innerText = pedido[tipo];
-    actualizarPedido();
-}
-
-/* ACTUALIZAR PEDIDO */
-function actualizarPedido(){
-    let texto="";
-
-    colores.forEach(color=>{
-        if(pedido[color]>0){
-            texto+= pedido[color]+" "+color+"\n";
-        }
-    });
-
-    if(pedido.glitter>0){
-        texto+= pedido.glitter+" Glitter\n";
-    }
-
-    if(texto=="") texto="Aún sin productos";
-
-    document.getElementById("listaPedido").innerText = texto;
-}
-
-/* ENVIAR WHATS */
-function enviarWhats(){
-    let mensaje="Hola, quiero pedir:\n";
-
-    colores.forEach(color=>{
-        if(pedido[color]>0){
-            mensaje+= pedido[color]+" "+color+"\n";
-        }
-    });
-
-    if(pedido.glitter>0){
-        mensaje+= pedido.glitter+" Glitter\n";
-    }
-
-    if(mensaje=="Hola, quiero pedir:\n"){
-        alert("Agregá productos primero");
-        return;
-    }
-
-    let numero="54911XXXXXXXX"; // CAMBIA ESTO
-    let url="https://wa.me/"+numero+"?text="+encodeURIComponent(mensaje);
-    window.open(url,"_blank");
-}
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
+
