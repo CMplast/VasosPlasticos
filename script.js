@@ -112,3 +112,15 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
+function borrarPedido(){
+if(pedidoGuardado.length===0){
+alert("No hay pedido para borrar");
+return;
+}
+
+if(confirm("¿Seguro que querés borrar todo el pedido?")){
+pedidoGuardado=[];
+actualizarLista();
+}
+}
