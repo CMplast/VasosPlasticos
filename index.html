@@ -10,75 +10,68 @@
 <body>
 
 <h1>🛒 Pedido de Vasos</h1>
-<h2 class="aviso">⚠️El pedido es por caja no por unidad</h2>
+<h2 class="aviso">⚠️ El pedido es por caja, no por unidad</h2>
 
 <div class="instrucciones">
 <h3>📋 Cómo hacer tu pedido</h3>
 <p>
-1️⃣ Elegí el tipo de vaso (común, glitter o estampado).<br>
-2️⃣ Elegí si querés tapa (solo para 400cc).<br>
-3️⃣ Sumá las cajas por color con los botones +.<br>
-4️⃣ Tocá <b>"Guardar pedido"</b> para agregarlo al pedido actual.<br>
-5️⃣ Cuando termines, tocá <b>"Enviar pedido"</b> y se manda por WhatsApp.
+1️⃣ Elegí tamaño del vaso.<br>
+2️⃣ Elegí tipo y tapa.<br>
+3️⃣ Sumá las cajas por color.<br>
+4️⃣ Tocá <b>Guardar pedido</b>.<br>
+5️⃣ Cuando termines, tocá <b>Enviar pedido</b>.
 </p>
 </div>
 
-
-<!-- LISTA PEDIDO -->
+<!-- PEDIDO ACTUAL -->
 <div class="pedidoActual">
-<h2>📦 Pedido actual</h2>
 
-<button class="borrarPedido" onclick="borrarPedido()">🗑 Borrar pedido</button>
+<div class="pedidoHeader">
+<h2>📦 Pedido actual</h2>
+<button class="borrarPedido" onclick="borrarPedido()">🗑 Borrar</button>
+</div>
 
 <div id="listaPedido">Aún no hay productos</div>
 </div>
 
+<!-- PRODUCTO UNICO -->
+<div class="producto" data-nombre="Vasos">
 
-<!-- VASOS 400 -->
-<div class="producto" data-nombre="Vasos 400cc">
-<h2>Vasos 400cc</h2>
+<h2>Elegir producto</h2>
 
 <div class="opciones">
+
+<select class="tamano" id="tamano" onchange="cambiarTapa()">
+<option value="400">400ml</option>
+<option value="500">500ml</option>
+</select>
+
 <select class="tipo">
 <option value="Comun">Comun</option>
 <option value="Glitter">Glitter</option>
 <option value="Estampado">Estampado</option>
 </select>
 
-<select class="tapa">
+<select class="tapa" id="tapaSelect">
 <option value="">Sin tapa</option>
 <option value="Tapa lisa">Tapa lisa</option>
 <option value="Tapa domo">Tapa domo</option>
 <option value="Tapa pelota">Tapa pelota</option>
 </select>
+
 </div>
 
-<div class="colores" id="colores400"></div>
-<button class="guardar" onclick="guardarPedido('400')">💾 Guardar pedido 400</button>
+<div class="colores" id="coloresUnico"></div>
+
+<button class="guardar" onclick="guardarPedido()">💾 Guardar pedido</button>
 </div>
 
-<!-- VASOS 500 -->
-<div class="producto" data-nombre="Vasos 500cc">
-<h2>Vasos 500cc</h2>
-
-<div class="opciones">
-<select class="tipo">
-<option value="Comun">Comun</option>
-<option value="Glitter">Glitter</option>
-<option value="Estampado">Estampado</option>
-</select>
-</div>
-
-<div class="colores" id="colores500"></div>
-<button class="guardar" onclick="guardarPedido('500')">💾 Guardar pedido 500</button>
-</div>
-
-<!-- BOTON FLOTANTE -->
 <button class="btn-wsp" onclick="enviarWhatsApp()">📲 Enviar pedido</button>
 
 <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
