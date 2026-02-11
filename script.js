@@ -81,7 +81,12 @@ bloque+="\n";
 }
 
 const color=item.querySelector("span").innerText;
+if(tipo==="Glitter"){
+bloque+=`• ${cant} tapas ${color}\n`;
+}else{
 bloque+=`• ${cant} cajas ${color}\n`;
+}
+
 }
 });
 
@@ -140,3 +145,4 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
