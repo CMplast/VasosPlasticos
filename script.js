@@ -7,8 +7,8 @@ const colores = [
 
 let pedidoGuardado=[];
 
-function crearColores(id){
-const cont = document.getElementById(id);
+function crearColores(){
+const cont = document.getElementById("coloresUnico");
 
 colores.forEach(color=>{
 const div = document.createElement("div");
@@ -27,8 +27,7 @@ cont.appendChild(div);
 });
 }
 
-crearColores("colores400");
-crearColores("colores500");
+crearColores();
 
 function sumar(btn){
 const num = btn.parentElement.querySelector(".numero");
@@ -41,26 +40,43 @@ let val=parseInt(num.innerText);
 if(val>0) num.innerText=val-1;
 }
 
-function guardarPedido(tipoVaso){
+function cambiarTapa(){
+const tam = document.getElementById("tamano").value;
+const tapa = document.getElementById("tapaSelect");
+
+tapa.innerHTML="";
+
+if(tam==="400"){
+tapa.innerHTML=`
+<option value="">Sin tapa</option>
+<option value="Tapa lisa">Tapa lisa</option>
+<option value="Tapa domo">Tapa domo</option>
+<option value="Tapa pelota">Tapa pelota</option>
+`;
+}else{
+tapa.innerHTML=`
+<option value="">Sin tapa</option>
+<option value="Tapa lisa">Tapa lisa</option>
+`;
+}
+}
+
+function guardarPedido(){
 
 let bloque="";
 
-const prod = tipoVaso==="400"
-? document.querySelector('[data-nombre="Vasos 400cc"]')
-: document.querySelector('[data-nombre="Vasos 500cc"]');
+const tam = document.getElementById("tamano").value;
+const tipo = document.querySelector(".tipo").value;
+const tapa = document.getElementById("tapaSelect").value;
 
-const nombre = prod.dataset.nombre;
-const tipo = prod.querySelector(".tipo").value;
-const tapa = prod.querySelector(".tapa")?.value || "";
-
-prod.querySelectorAll(".colorItem").forEach(item=>{
+document.querySelectorAll(".colorItem").forEach(item=>{
 const cant=item.querySelector(".numero").innerText;
 
 if(cant>0){
 if(bloque===""){
-bloque+=`${nombre}`;
+bloque+=`Vasos ${tam}ml`;
 if(tipo!=="Comun") bloque+=` (${tipo})`;
-if(tapa && nombre==="Vasos 400cc") bloque+=` - ${tapa}`;
+if(tapa) bloque+=` - ${tapa}`;
 bloque+="\n";
 }
 
@@ -76,7 +92,7 @@ return;
 
 pedidoGuardado.push(bloque);
 actualizarLista();
-resetear(prod);
+resetear();
 }
 
 function actualizarLista(){
@@ -90,8 +106,20 @@ lista.appendChild(div);
 });
 }
 
-function resetear(prod){
-prod.querySelectorAll(".numero").forEach(n=>n.innerText="0");
+function resetear(){
+document.querySelectorAll(".numero").forEach(n=>n.innerText="0");
+}
+
+function borrarPedido(){
+if(pedidoGuardado.length===0){
+alert("No hay pedido para borrar");
+return;
+}
+
+if(confirm("¿Borrar todo el pedido?")){
+pedidoGuardado=[];
+actualizarLista();
+}
 }
 
 function enviarWhatsApp(){
@@ -111,16 +139,4 @@ window.open(`https://api.whatsapp.com/send?phone=${num1}&text=${encodeURICompone
 setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
-}
-
-function borrarPedido(){
-if(pedidoGuardado.length===0){
-alert("No hay pedido para borrar");
-return;
-}
-
-if(confirm("¿Seguro que querés borrar todo el pedido?")){
-pedidoGuardado=[];
-actualizarLista();
-}
 }
