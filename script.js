@@ -49,14 +49,14 @@ tapa.innerHTML="";
 if(tam==="400"){
 tapa.innerHTML=`
 <option value="">Sin tapa</option>
-<option value="Tapa lisa">Tapa lisa</option>
+<option value="Tapa plana">Tapa plana</option>
 <option value="Tapa domo">Tapa domo</option>
 <option value="Tapa pelota">Tapa pelota</option>
 `;
 }else{
 tapa.innerHTML=`
 <option value="">Sin tapa</option>
-<option value="Tapa lisa">Tapa lisa</option>
+<option value="Tapa plana">Tapa plana</option>
 `;
 }
 }
@@ -145,6 +145,7 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
 
 
 
