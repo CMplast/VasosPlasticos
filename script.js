@@ -1,58 +1,150 @@
-// LINK DE TU API (EL LARGO)
-const API_URL = "https://script.google.com/macros/s/AKfycbyVN26C5xYgC1huaXwegzGBQd_pMCLwl6nwa2dHdflxaLHhUz8bGL-MtWosQbbw6fG_pw/exec";
+const colores = [
+"Blanco","Amarillo","Celeste","Violeta","Azul","Verde","Naranja",
+"Rosa","Rojo","Negro","Natural","Fuccia","Verde Fluo","Amarillo fluo",
+"Naranja Fluo","Violeta Fluo","Verde pastel","Violeta pastel",
+"Rosa pastel","Celeste pastel"
+];
 
-let stock = {};
+let pedidoGuardado=[];
 
-// cargar stock desde google sheets
-async function cargarStock() {
-    try {
-        const res = await fetch(API_URL);
-        const data = await res.json();
-        stock = data;
-        console.log("Stock cargado:", stock);
-    } catch (error) {
-        console.error("Error cargando stock", error);
-    }
+function crearColores(){
+const cont = document.getElementById("coloresUnico");
+
+colores.forEach(color=>{
+const div = document.createElement("div");
+div.className="colorItem";
+
+div.innerHTML=`
+<span>${color}</span>
+<div class="contador">
+<button onclick="restar(this)">-</button>
+<span class="numero">0</span>
+<button onclick="sumar(this)">+</button>
+</div>
+`;
+
+cont.appendChild(div);
+});
 }
 
-// sumar cajas
-function cambiarCantidad(color, cambio) {
-    let input = document.getElementById("cantidad-" + color);
-    let valor = parseInt(input.value) || 0;
+crearColores();
 
-    valor += cambio;
-    if (valor < 0) valor = 0;
-
-    input.value = valor;
+function sumar(btn){
+const num = btn.parentElement.querySelector(".numero");
+num.innerText = parseInt(num.innerText)+1;
 }
 
-// crear lista de colores
-function cargarColores() {
-    const colores = [
-        "Rojo","Azul","Negro","Blanco","Amarillo","Celeste","Violeta",
-        "Verde","Naranja","Rosa","Natural",
-        "Rosa Fluo","Verde Fluo","Amarillo Fluo","Naranja Fluo","Violeta Fluo",
-        "Verde Pastel","Violeta Pastel","Rosa Pastel","Celeste Pastel"
-    ];
-
-    const contenedor = document.getElementById("colores");
-
-    colores.forEach(color => {
-        contenedor.innerHTML += `
-        <div class="color-item">
-            <span>${color}</span>
-            <button onclick="cambiarCantidad('${color}', -1)">-</button>
-            <input type="number" id="cantidad-${color}" value="0">
-            <button onclick="cambiarCantidad('${color}', 1)">+</button>
-        </div>
-        `;
-    });
+function restar(btn){
+const num = btn.parentElement.querySelector(".numero");
+let val=parseInt(num.innerText);
+if(val>0) num.innerText=val-1;
 }
 
-// iniciar
-cargarStock();
-cargarColores();
+function cambiarTapa(){
+const tam = document.getElementById("tamano").value;
+const tapa = document.getElementById("tapaSelect");
 
+tapa.innerHTML="";
+
+if(tam==="400"){
+tapa.innerHTML=`
+<option value="">Sin tapa</option>
+<option value="Tapa plana">Tapa plana</option>
+<option value="Tapa domo lisa">Tapa domo lisa</option>
+<option value="Tapa pelota">Tapa pelota</option>
+`;
+}else{
+tapa.innerHTML=`
+<option value="">Sin tapa</option>
+<option value="Tapa plana">Tapa plana</option>
+`;
+}
+}
+
+function guardarPedido(){
+
+let bloque="";
+
+const tam = document.getElementById("tamano").value;
+const tipo = document.querySelector(".tipo").value;
+const tapa = document.getElementById("tapaSelect").value;
+
+document.querySelectorAll(".colorItem").forEach(item=>{
+const cant=item.querySelector(".numero").innerText;
+
+if(cant>0){
+if(bloque===""){
+bloque+=`Vasos ${tam}ml`;
+if(tipo!=="Comun") bloque+=` (${tipo})`;
+if(tapa) bloque+=` - ${tapa}`;
+bloque+="\n";
+}
+
+const color=item.querySelector("span").innerText;
+if(tipo==="Glitter"){
+bloque+=`• ${cant} Bolsa de tapas ${color}\n`;
+}else{
+bloque+=`• ${cant} cajas ${color}\n`;
+}
+
+}
+});
+
+if(bloque===""){
+alert("No agregaste nada");
+return;
+}
+
+pedidoGuardado.push(bloque);
+actualizarLista();
+resetear();
+}
+
+function actualizarLista(){
+const lista=document.getElementById("listaPedido");
+lista.innerHTML="";
+
+pedidoGuardado.forEach(p=>{
+const div=document.createElement("div");
+div.innerText=p;
+lista.appendChild(div);
+});
+}
+
+function resetear(){
+document.querySelectorAll(".numero").forEach(n=>n.innerText="0");
+}
+
+function borrarPedido(){
+if(pedidoGuardado.length===0){
+alert("No hay pedido para borrar");
+return;
+}
+
+if(confirm("¿Borrar todo el pedido?")){
+pedidoGuardado=[];
+actualizarLista();
+}
+}
+
+function enviarWhatsApp(){
+
+if(pedidoGuardado.length===0){
+alert("No hay pedido");
+return;
+}
+
+let mensaje="PEDIDO MAYORISTA\n\n";
+pedidoGuardado.forEach(p=>mensaje+=p+"\n");
+
+const num1="5491134505374";
+const num2="5491165032943";
+
+window.open(`https://api.whatsapp.com/send?phone=${num1}&text=${encodeURIComponent(mensaje)}`,"_blank");
+setTimeout(()=>{
+window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
+},800);
+}
 
 
 
