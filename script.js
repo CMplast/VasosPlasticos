@@ -188,3 +188,4 @@ window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURICompone
 
 
 
+
