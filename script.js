@@ -1,3 +1,22 @@
+// URL de tu sistema de stock (no tocar)
+const API_STOCK = "https://script.google.com/macros/s/AKfycbyVN26C5xYgC1huaXwegzGBQd_pMCLwl6nwa2dHdflxaLHhUz8bGL-MtWosQbbw6fG_pw/exec";
+
+let stockActual = {};
+
+async function cargarStock(){
+try{
+const res = await fetch(API_STOCK);
+const data = await res.json();
+stockActual = data;
+console.log("Stock cargado:", stockActual);
+}catch(e){
+console.log("Error cargando stock");
+}
+}
+
+cargarStock();
+
+
 const colores = [
 "Blanco","Amarillo","Celeste","Violeta","Azul","Verde","Naranja",
 "Rosa","Rojo","Negro","Natural","Fuccia","Verde Fluo","Amarillo fluo",
@@ -30,9 +49,21 @@ cont.appendChild(div);
 crearColores();
 
 function sumar(btn){
-const num = btn.parentElement.querySelector(".numero");
-num.innerText = parseInt(num.innerText)+1;
+const item = btn.closest(".colorItem");
+const color = item.querySelector("span").innerText;
+
+let stock = stockActual[color] || 0;
+const num = item.querySelector(".numero");
+let actual = parseInt(num.innerText);
+
+if(actual >= stock){
+alert("No hay más stock disponible de "+color);
+return;
 }
+
+num.innerText = actual + 1;
+}
+
 
 function restar(btn){
 const num = btn.parentElement.querySelector(".numero");
@@ -145,6 +176,7 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
 
 
 
