@@ -48,26 +48,40 @@ cont.appendChild(div);
 
 crearColores();
 
+function normalizarColor(c){
+return c.trim().toLowerCase();
+}
+
 function sumar(btn){
 const item = btn.closest(".colorItem");
-const color = item.querySelector("span").innerText.trim();
+const colorTexto = item.querySelector("span").innerText;
 
-let stockUnidades = stockActual[color] || 0;
+// normalizar color de la web
+const color = normalizarColor(colorTexto);
 
-// 1 caja = 100 vasos
+let stockUnidades = 0;
+
+// buscar color en stock aunque tenga mayúsculas distintas
+for(const c in stockActual){
+if(normalizarColor(c) === color){
+stockUnidades = stockActual[c];
+break;
+}
+}
+
+// 1 caja = 100 unidades
 let stockCajas = Math.floor(stockUnidades / 100);
 
 const num = item.querySelector(".numero");
 let actual = parseInt(num.innerText);
 
 if(actual >= stockCajas){
-alert("Solo quedan "+stockCajas+" cajas de "+color);
+alert("Solo quedan "+stockCajas+" cajas de "+colorTexto);
 return;
 }
 
 num.innerText = actual + 1;
 }
-
 
 
 function restar(btn){
@@ -181,6 +195,7 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
 
 
 
