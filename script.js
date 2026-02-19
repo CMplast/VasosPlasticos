@@ -52,17 +52,22 @@ function sumar(btn){
 const item = btn.closest(".colorItem");
 const color = item.querySelector("span").innerText;
 
-let stock = stockActual[color] || 0;
+let stockUnidades = stockActual[color] || 0;
+
+// convertir stock a cajas
+let stockCajas = Math.floor(stockUnidades / 100);
+
 const num = item.querySelector(".numero");
 let actual = parseInt(num.innerText);
 
-if(actual >= stock){
-alert("No hay más stock disponible de "+color);
+if(actual >= stockCajas){
+alert("Solo quedan "+stockCajas+" cajas de "+color);
 return;
 }
 
 num.innerText = actual + 1;
 }
+
 
 
 function restar(btn){
@@ -176,6 +181,7 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
 
 
 
