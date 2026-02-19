@@ -1,5 +1,5 @@
 // URL de tu sistema de stock (no tocar)
-const API_STOCK = "https://script.google.com/macros/s/AKfycbyVN26C5xYgC1huaXwegzGBQd_pMCLwl6nwa2dHdflxaLHhUz8bGL-MtWosQbbw6fG_pw/exec";
+const API_STOCK = "https://script.google.com/macros/s/AKfycbxQJw9zfKeNO_0JsfIR8-T8pyQSob_oJ32h-nS4sXxL3jfdzrqR4LOIsJ5eW45N3BcR1g/exec";
 
 let stockActual = {};
 
@@ -195,6 +195,7 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
 
 
 
