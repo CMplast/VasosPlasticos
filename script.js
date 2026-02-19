@@ -1,6 +1,6 @@
 const colores = [
 "Blanco","Amarillo","Celeste","Violeta","Azul","Verde","Naranja",
-"Rosa","Negro","Natural","Fuccia","Verde Fluo","Amarillo fluo",
+"Rosa","Rojo","Negro","Natural","Fuccia","Verde Fluo","Amarillo fluo",
 "Naranja Fluo","Violeta Fluo","Verde pastel","Violeta pastel",
 "Rosa pastel","Celeste pastel"
 ];
@@ -140,3 +140,4 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
