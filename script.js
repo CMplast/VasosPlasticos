@@ -1,6 +1,6 @@
 const colores = [
 "Blanco","Amarillo","Celeste","Violeta","Azul","Verde","Naranja",
-"Rosa","Rojo","Negro","Natural","Fuccia","Verde Fluo","Amarillo fluo",
+"Rosa","Negro","Natural","Fuccia","Verde Fluo","Amarillo fluo",
 "Naranja Fluo","Violeta Fluo","Verde pastel","Violeta pastel",
 "Rosa pastel","Celeste pastel"
 ];
@@ -49,14 +49,14 @@ tapa.innerHTML="";
 if(tam==="400"){
 tapa.innerHTML=`
 <option value="">Sin tapa</option>
-<option value="Tapa plana">Tapa plana</option>
-<option value="Tapa domo lisa">Tapa domo lisa</option>
+<option value="Tapa lisa">Tapa lisa</option>
+<option value="Tapa domo">Tapa domo</option>
 <option value="Tapa pelota">Tapa pelota</option>
 `;
 }else{
 tapa.innerHTML=`
 <option value="">Sin tapa</option>
-<option value="Tapa plana">Tapa plana</option>
+<option value="Tapa lisa">Tapa lisa</option>
 `;
 }
 }
@@ -81,12 +81,7 @@ bloque+="\n";
 }
 
 const color=item.querySelector("span").innerText;
-if(tipo==="Glitter"){
-bloque+=`• ${cant} Bolsa de tapas ${color}\n`;
-}else{
 bloque+=`• ${cant} cajas ${color}\n`;
-}
-
 }
 });
 
@@ -145,11 +140,3 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
-
-
-
-
-
-
-
-
