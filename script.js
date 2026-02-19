@@ -50,11 +50,11 @@ crearColores();
 
 function sumar(btn){
 const item = btn.closest(".colorItem");
-const color = item.querySelector("span").innerText;
+const color = item.querySelector("span").innerText.trim();
 
 let stockUnidades = stockActual[color] || 0;
 
-// convertir stock a cajas
+// 1 caja = 100 vasos
 let stockCajas = Math.floor(stockUnidades / 100);
 
 const num = item.querySelector(".numero");
@@ -181,6 +181,7 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
 
 
 
