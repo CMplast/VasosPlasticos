@@ -1,3 +1,6 @@
+html {
+scroll-behavior: smooth;
+}
 body{
 font-family:'Segoe UI', Arial;
 background:#eef1f6;
@@ -259,6 +262,7 @@ color: #16a34a;
 50% { transform: scale(1.4); }
 100% { transform: scale(1); }
 }
+
 
 
 
