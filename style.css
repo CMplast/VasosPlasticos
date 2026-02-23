@@ -249,6 +249,16 @@ margin:0;
 }
 }
 
+.numero.animar {
+animation: pop 0.25s ease;
+color: #16a34a;
+}
+
+@keyframes pop {
+0% { transform: scale(1); }
+50% { transform: scale(1.4); }
+100% { transform: scale(1); }
+}
 
 
 
