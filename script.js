@@ -106,11 +106,10 @@ actualizarLista();
 resetear();
 const pedidoActual = document.querySelector(".pedidoActual");
 
-window.scrollTo({
-    top: pedidoActual.offsetTop - 20,
-    behavior: "smooth"
+pedidoActual.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
 });
-
 function actualizarLista(){
 const lista=document.getElementById("listaPedido");
 lista.innerHTML="";
@@ -156,6 +155,7 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
 
 
 
