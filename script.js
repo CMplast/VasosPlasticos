@@ -32,12 +32,21 @@ crearColores();
 function sumar(btn){
 const num = btn.parentElement.querySelector(".numero");
 num.innerText = parseInt(num.innerText)+1;
+
+animarNumero(num);
 }
 
-function sumar(btn){
+function restar(btn){
 const num = btn.parentElement.querySelector(".numero");
-num.innerText = parseInt(num.innerText)+1;
+let val = parseInt(num.innerText);
 
+if(val > 0){
+num.innerText = val - 1;
+animarNumero(num);
+}
+}
+
+function animarNumero(num){
 num.classList.remove("animar");
 void num.offsetWidth; // reinicia animación
 num.classList.add("animar");
@@ -142,5 +151,6 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
 
 
