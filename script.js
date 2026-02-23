@@ -34,12 +34,14 @@ const num = btn.parentElement.querySelector(".numero");
 num.innerText = parseInt(num.innerText)+1;
 }
 
-function restar(btn){
+function sumar(btn){
 const num = btn.parentElement.querySelector(".numero");
-let val=parseInt(num.innerText);
-if(val>0) num.innerText=val-1;
-}
+num.innerText = parseInt(num.innerText)+1;
 
+num.classList.remove("animar");
+void num.offsetWidth; // reinicia animación
+num.classList.add("animar");
+}
 function cambiarTapa(){
 const tam = document.getElementById("tamano").value;
 const tapa = document.getElementById("tapaSelect");
@@ -140,4 +142,5 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
 
