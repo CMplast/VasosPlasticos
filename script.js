@@ -99,7 +99,7 @@ bloque+=`• ${cant} cajas ${color}\n`;
 if(bloque===""){
 alert("No agregaste nada");
 return;
-}
+}    
 
 pedidoGuardado.push(bloque);
 actualizarLista();
@@ -110,6 +110,8 @@ pedidoActual.scrollIntoView({
     behavior: "smooth",
     block: "start"
 });
+}
+
 function actualizarLista(){
 const lista=document.getElementById("listaPedido");
 lista.innerHTML="";
@@ -155,6 +157,7 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
 
 
 
