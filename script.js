@@ -60,7 +60,6 @@ tapa.innerHTML=`
 `;
 }
 }
-
 async function guardarPedido(){
 
 let bloque="";
@@ -76,8 +75,11 @@ for (const item of document.querySelectorAll(".colorItem")) {
 
     const color = item.querySelector("span").innerText;
 
-    const response = await fetch("https://script.google.com/macros/s/AKfycbxLJRiMIImriIl-dMrkjDR6yldG0hPAQWZuZoeAeGhNlD3_X9P37yihwl7pHIUHcWYp/exec", {
+    const response = await fetch("/api/stock", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         producto: "Vaso",
         tamano: tam,
@@ -87,9 +89,9 @@ for (const item of document.querySelectorAll(".colorItem")) {
       })
     });
 
-    const result = await response.text();
+    const data = await response.json();
 
-    if(result === "SIN_STOCK"){
+    if(data.result.includes("SIN_STOCK")){
       alert("No hay stock suficiente de " + color);
       return;
     }
@@ -106,15 +108,14 @@ for (const item of document.querySelectorAll(".colorItem")) {
 }
 
 if(bloque===""){
-alert("No agregaste nada");
-return;
+  alert("No agregaste nada");
+  return;
 }
 
 pedidoGuardado.push(bloque);
 actualizarLista();
 resetear();
 }
-
 function actualizarLista(){
 const lista=document.getElementById("listaPedido");
 lista.innerHTML="";
@@ -160,5 +161,6 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
 
 
