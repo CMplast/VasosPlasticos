@@ -1,11 +1,12 @@
-html {
-scroll-behavior: smooth;
-}
 body{
 font-family:'Segoe UI', Arial;
 background:#eef1f6;
 margin:0;
 padding:15px;
+}
+
+html{
+scroll-behavior:smooth;
 }
 
 h1{text-align:center;margin-bottom:5px;}
@@ -30,6 +31,7 @@ border-radius:16px;
 margin-bottom:20px;
 font-weight:bold;
 box-shadow:0 6px 18px rgba(0,0,0,0.3);
+transition:background 0.3s ease, transform 0.3s ease;
 }
 
 .producto{
@@ -92,6 +94,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 box-shadow:0 3px 6px rgba(0,0,0,0.3);
+cursor:pointer;
 }
 
 .contador button:active{transform:scale(0.9);}
@@ -101,6 +104,24 @@ font-size:20px;
 font-weight:bold;
 width:28px;
 text-align:center;
+color:#111;
+transition:color 0.2s ease;
+}
+
+/* VERDE CUANDO ES MAYOR A 0 */
+.numero.activo{
+color:#16a34a;
+}
+
+/* ANIMACION POP */
+.numero.animar{
+animation:pop 0.25s ease;
+}
+
+@keyframes pop{
+0%{transform:scale(1);}
+50%{transform:scale(1.4);}
+100%{transform:scale(1);}
 }
 
 .guardar{
@@ -114,6 +135,7 @@ border:none;
 border-radius:14px;
 font-weight:bold;
 box-shadow:0 4px 12px rgba(0,0,0,0.3);
+cursor:pointer;
 }
 
 .guardar:active{transform:scale(0.97);}
@@ -135,6 +157,7 @@ z-index:999;
 display:flex;
 align-items:center;
 gap:10px;
+cursor:pointer;
 }
 
 .btn-wsp:hover{transform:scale(1.05);}
@@ -173,6 +196,14 @@ box-shadow:0 3px 8px rgba(0,0,0,0.25);
 transform:scale(0.95);
 }
 
+/* HEADER PEDIDO */
+.pedidoHeader{
+display:flex;
+justify-content:space-between;
+align-items:center;
+width:100%;
+}
+
 /* SOLO CELULAR */
 @media (max-width:600px){
 
@@ -181,58 +212,6 @@ display:flex;
 flex-direction:column;
 }
 
-.pedidoActual h2{
-display:flex;
-justify-content:space-between;
-align-items:center;
-font-size:18px;
-margin-bottom:10px;
-}
-
-.borrarPedido{
-width:100%;
-font-size:15px;
-padding:10px;
-}
-}
-
-/* ARREGLO DEFINITIVO CELULAR */
-@media (max-width:600px){
-
-.pedidoHeader{
-display:flex !important;
-flex-direction:row !important;
-justify-content:space-between !important;
-align-items:center !important;
-flex-wrap:nowrap !important;
-width:100%;
-}
-
-.pedidoHeader h2{
-margin:0 !important;
-font-size:18px;
-white-space:nowrap;
-}
-
-.borrarPedido{
-margin:0 !important;
-padding:8px 12px;
-font-size:14px;
-white-space:nowrap;
-}
-}
-
-/* HEADER PEDIDO EN UNA SOLA FILA (celular) */
-.pedidoHeader{
-display:flex;
-justify-content:space-between;
-align-items:center;
-width:100%;
-}
-
-/* ARREGLO SOLO CELULAR */
-@media (max-width:600px){
-
 .pedidoHeader{
 flex-direction:row !important;
 flex-wrap:nowrap !important;
@@ -245,25 +224,11 @@ font-size:18px;
 }
 
 .borrarPedido{
-width:auto !important;   /* ← ESTE ERA EL PROBLEMA */
+width:auto !important;
 padding:8px 12px;
 font-size:14px;
 margin:0;
 }
+
 }
-
-.numero.animar {
-animation: pop 0.25s ease;
-color: #16a34a;
-}
-
-@keyframes pop {
-0% { transform: scale(1); }
-50% { transform: scale(1.4); }
-100% { transform: scale(1); }
-}
-
-
-
-
 
