@@ -122,6 +122,11 @@ window.scrollTo({
     top: pedidoActual.offsetTop - 10,
     behavior: "smooth"
 });
+const bloquePedido = document.querySelector(".pedidoActual");
+
+bloquePedido.classList.remove("confirmado");
+void bloquePedido.offsetWidth;
+bloquePedido.classList.add("confirmado");
 }
 
 function actualizarLista(){
@@ -169,6 +174,7 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
 
 
 
