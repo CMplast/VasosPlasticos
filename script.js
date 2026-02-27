@@ -79,7 +79,7 @@ tapa.innerHTML=`
 }else{
 tapa.innerHTML=`
 <option value="">Sin tapa</option>
-<option value="Tapa lisa">Tapa lisa</option>
+<option value="Tapa plana">Tapa plana</option>
 `;
 }
 }
@@ -176,6 +176,7 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
 
 
 
