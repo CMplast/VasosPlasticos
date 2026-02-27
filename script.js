@@ -145,19 +145,21 @@ document.querySelectorAll(".numero").forEach(n=>{
     n.innerText = "0";
     animarNumero(n);
 });
-}
 function borrarPedido(){
+
 if(pedidoGuardado.length===0){
-alert("No hay pedido para borrar");
+mostrarModal("No hay pedido para borrar");
 return;
 }
 
-if(confirm("¿Borrar todo el pedido?")){
+mostrarModal("¿Borrar todo el pedido?", (confirmado)=>{
+if(confirmado){
 pedidoGuardado=[];
 actualizarLista();
 }
-}
+});
 
+}
 function enviarWhatsApp(){
 
 if(pedidoGuardado.length===0){
@@ -198,6 +200,7 @@ btnCancelar.onclick = () => {
     if(callback) callback(false);
 };
 }
+
 
 
 
