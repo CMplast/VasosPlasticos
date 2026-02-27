@@ -32,7 +32,6 @@ crearColores();
 function sumar(btn){
 const num = btn.parentElement.querySelector(".numero");
 num.innerText = parseInt(num.innerText)+1;
-
 animarNumero(num);
 }
 
@@ -50,19 +49,17 @@ function animarNumero(num){
 
 const valor = Number(num.innerText);
 
-// ---- CONTROL DE COLOR ----
 if(valor > 0){
     num.style.color = "#16a34a";
 }else{
     num.style.color = "#111";
 }
 
-// ---- ANIMACIÓN ----
 num.classList.remove("animar");
 void num.offsetWidth;
 num.classList.add("animar");
-
 }
+
 function cambiarTapa(){
 const tam = document.getElementById("tamano").value;
 const tapa = document.getElementById("tapaSelect");
@@ -109,29 +106,34 @@ bloque+=`• ${cant} cajas ${color}\n`;
 });
 
 if(bloque===""){
-alert("No agregaste nada");
+mostrarModal("No agregaste nada");
 return;
-}    
+}
 
 pedidoGuardado.push(bloque);
 actualizarLista();
 resetear();
+
 const pedidoActual = document.querySelector(".pedidoActual");
 
 window.scrollTo({
     top: pedidoActual.offsetTop - 10,
     behavior: "smooth"
 });
-const bloquePedido = document.querySelector(".pedidoActual");
 
-bloquePedido.classList.remove("confirmado");
-void bloquePedido.offsetWidth;
-bloquePedido.classList.add("confirmado");
+pedidoActual.classList.remove("confirmado");
+void pedidoActual.offsetWidth;
+pedidoActual.classList.add("confirmado");
 }
 
 function actualizarLista(){
 const lista=document.getElementById("listaPedido");
 lista.innerHTML="";
+
+if(pedidoGuardado.length===0){
+lista.innerText="Aún no hay productos";
+return;
+}
 
 pedidoGuardado.forEach(p=>{
 const div=document.createElement("div");
@@ -139,12 +141,13 @@ div.innerText=p;
 lista.appendChild(div);
 });
 }
+
 function resetear(){
 document.querySelectorAll(".numero").forEach(n=>{
     n.innerText = "0";
     animarNumero(n);
 });
-} // ← cierre correcto
+}
 
 function borrarPedido(){
 
@@ -159,7 +162,6 @@ pedidoGuardado=[];
 actualizarLista();
 }
 });
-
 }
 
 function enviarWhatsApp(){
@@ -176,6 +178,7 @@ const num1="5491134505374";
 const num2="5491165032943";
 
 window.open(`https://api.whatsapp.com/send?phone=${num1}&text=${encodeURIComponent(mensaje)}`,"_blank");
+
 setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
@@ -189,16 +192,15 @@ const btnAceptar = document.getElementById("modalAceptar");
 const btnCancelar = document.getElementById("modalCancelar");
 
 textoModal.innerText = texto;
-
 modal.classList.add("activo");
 
 btnAceptar.onclick = () => {
-    modal.classList.remove("activo");
-    if(callback) callback(true);
+modal.classList.remove("activo");
+if(callback) callback(true);
 };
 
 btnCancelar.onclick = () => {
-    modal.classList.remove("activo");
-    if(callback) callback(false);
+modal.classList.remove("activo");
+if(callback) callback(false);
 };
 }
