@@ -47,9 +47,21 @@ animarNumero(num);
 }
 
 function animarNumero(num){
+
+const valor = Number(num.innerText);
+
+// ---- CONTROL DE COLOR ----
+if(valor > 0){
+    num.style.color = "#16a34a";
+}else{
+    num.style.color = "#111";
+}
+
+// ---- ANIMACIÓN ----
 num.classList.remove("animar");
-void num.offsetWidth; // reinicia animación
+void num.offsetWidth;
 num.classList.add("animar");
+
 }
 function cambiarTapa(){
 const tam = document.getElementById("tamano").value;
@@ -157,6 +169,7 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
 
 
 
