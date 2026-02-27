@@ -141,9 +141,11 @@ lista.appendChild(div);
 }
 
 function resetear(){
-document.querySelectorAll(".numero").forEach(n=>n.innerText="0");
+document.querySelectorAll(".numero").forEach(n=>{
+    n.innerText = "0";
+    animarNumero(n);
+});
 }
-
 function borrarPedido(){
 if(pedidoGuardado.length===0){
 alert("No hay pedido para borrar");
@@ -174,6 +176,7 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
 
 
 
