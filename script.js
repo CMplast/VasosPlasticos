@@ -139,13 +139,12 @@ div.innerText=p;
 lista.appendChild(div);
 });
 }
-
 function resetear(){
 document.querySelectorAll(".numero").forEach(n=>{
     n.innerText = "0";
     animarNumero(n);
 });
-}
+} // ← cierre correcto
 
 function borrarPedido(){
 
@@ -180,4 +179,26 @@ window.open(`https://api.whatsapp.com/send?phone=${num1}&text=${encodeURICompone
 setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
+}
+
+function mostrarModal(texto, callback){
+
+const modal = document.getElementById("modal");
+const textoModal = document.getElementById("modalTexto");
+const btnAceptar = document.getElementById("modalAceptar");
+const btnCancelar = document.getElementById("modalCancelar");
+
+textoModal.innerText = texto;
+
+modal.classList.add("activo");
+
+btnAceptar.onclick = () => {
+    modal.classList.remove("activo");
+    if(callback) callback(true);
+};
+
+btnCancelar.onclick = () => {
+    modal.classList.remove("activo");
+    if(callback) callback(false);
+};
 }
