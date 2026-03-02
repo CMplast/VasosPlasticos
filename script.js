@@ -100,15 +100,17 @@ tapa.innerHTML=`
 function guardarPedido(){
 
 let bloque="";
+let subtotal = 0;
 
 const tam = document.getElementById("tamano").value;
 const tipo = document.querySelector(".tipo").value;
 const tapa = document.getElementById("tapaSelect").value;
 
 document.querySelectorAll(".colorItem").forEach(item=>{
-const cant=item.querySelector(".numero").innerText;
+const cant = parseInt(item.querySelector(".numero").innerText);
 
-if(cant>0){
+if(cant > 0){
+
 if(bloque===""){
 bloque+=`Vasos ${tam}ml`;
 if(tipo!=="Comun") bloque+=` (${tipo})`;
@@ -118,6 +120,8 @@ bloque+="\n";
 
 const color=item.querySelector("span").innerText;
 bloque+=`• ${cant} cajas ${color}\n`;
+
+subtotal += cant;
 }
 });
 
@@ -126,7 +130,11 @@ mostrarModal("No agregaste nada");
 return;
 }
 
-pedidoGuardado.push(bloque);
+pedidoGuardado.push({
+texto: bloque,
+subtotal: subtotal
+});
+
 actualizarLista();
 resetear();
 
@@ -158,18 +166,31 @@ lista.innerText="Aún no hay productos";
 return;
 }
 
-pedidoGuardado.forEach((p, index)=>{
+let totalGeneral = 0;
+
+pedidoGuardado.forEach((pedido, index)=>{
+
+totalGeneral += pedido.subtotal;
 
 const contenedor = document.createElement("div");
 contenedor.style.background="#1e293b";
 contenedor.style.padding="12px";
 contenedor.style.borderRadius="12px";
-contenedor.style.marginBottom="10px";
+contenedor.style.marginBottom="12px";
 contenedor.style.position="relative";
 contenedor.style.whiteSpace="pre-line";
 
+const titulo = document.createElement("div");
+titulo.innerHTML = `<strong>Pedido ${index+1}</strong>`;
+titulo.style.marginBottom="6px";
+
 const texto = document.createElement("div");
-texto.innerText = p;
+texto.innerText = pedido.texto;
+
+const subtotalDiv = document.createElement("div");
+subtotalDiv.innerHTML = `Subtotal: <strong>${pedido.subtotal} cajas</strong>`;
+subtotalDiv.style.marginTop="8px";
+subtotalDiv.style.color="#16a34a";
 
 const btnEliminar = document.createElement("button");
 btnEliminar.innerText = "🗑";
@@ -192,11 +213,28 @@ actualizarLista();
 });
 };
 
+contenedor.appendChild(titulo);
 contenedor.appendChild(texto);
+contenedor.appendChild(subtotalDiv);
 contenedor.appendChild(btnEliminar);
+
 lista.appendChild(contenedor);
 
 });
+
+/* TOTAL GENERAL */
+
+const totalDiv = document.createElement("div");
+totalDiv.innerHTML = `TOTAL GENERAL: <strong>${totalGeneral} cajas</strong>`;
+totalDiv.style.marginTop="15px";
+totalDiv.style.padding="10px";
+totalDiv.style.background="#0f172a";
+totalDiv.style.borderRadius="10px";
+totalDiv.style.textAlign="center";
+totalDiv.style.fontSize="18px";
+totalDiv.style.color="#38bdf8";
+
+lista.appendChild(totalDiv);
 }
 
 /* =========================
@@ -241,7 +279,12 @@ return;
 }
 
 let mensaje="PEDIDO MAYORISTA\n\n";
-pedidoGuardado.forEach(p=>mensaje+=p+"\n");
+
+pedidoGuardado.forEach((pedido, index)=>{
+mensaje+=`Pedido ${index+1}\n`;
+mensaje+=pedido.texto;
+mensaje+=`Subtotal: ${pedido.subtotal} cajas\n\n`;
+});
 
 const num1="5491134505374";
 const num2="5491165032943";
