@@ -279,12 +279,22 @@ return;
 }
 
 let mensaje="PEDIDO MAYORISTA\n\n";
+let totalGeneral = 0;
 
 pedidoGuardado.forEach((pedido, index)=>{
+
 mensaje+=`Pedido ${index+1}\n`;
 mensaje+=pedido.texto;
 mensaje+=`Subtotal: ${pedido.subtotal} cajas\n\n`;
+
+totalGeneral += pedido.subtotal;
+
 });
+
+/* SEPARADOR */
+mensaje+="----------------------------\n";
+mensaje+=`TOTAL GENERAL: ${totalGeneral} cajas\n`;
+mensaje+="----------------------------\n";
 
 const num1="5491134505374";
 const num2="5491165032943";
@@ -320,3 +330,4 @@ modal.classList.remove("activo");
 if(callback) callback(false);
 };
 }
+
