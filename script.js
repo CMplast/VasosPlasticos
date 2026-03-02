@@ -5,7 +5,11 @@ const colores = [
 "Rosa pastel","Celeste pastel"
 ];
 
-let pedidoGuardado=[];
+let pedidoGuardado = [];
+
+/* =========================
+   CREAR COLORES
+========================= */
 
 function crearColores(){
 const cont = document.getElementById("coloresUnico");
@@ -28,6 +32,10 @@ cont.appendChild(div);
 }
 
 crearColores();
+
+/* =========================
+   SUMAR / RESTAR
+========================= */
 
 function sumar(btn){
 const num = btn.parentElement.querySelector(".numero");
@@ -60,6 +68,10 @@ void num.offsetWidth;
 num.classList.add("animar");
 }
 
+/* =========================
+   CAMBIAR TAPA
+========================= */
+
 function cambiarTapa(){
 const tam = document.getElementById("tamano").value;
 const tapa = document.getElementById("tapaSelect");
@@ -80,6 +92,10 @@ tapa.innerHTML=`
 `;
 }
 }
+
+/* =========================
+   GUARDAR PEDIDO
+========================= */
 
 function guardarPedido(){
 
@@ -114,6 +130,7 @@ pedidoGuardado.push(bloque);
 actualizarLista();
 resetear();
 
+/* Scroll suave */
 const pedidoActual = document.querySelector(".pedidoActual");
 
 window.scrollTo({
@@ -121,13 +138,19 @@ window.scrollTo({
     behavior: "smooth"
 });
 
+/* Animación confirmación */
 pedidoActual.classList.remove("confirmado");
 void pedidoActual.offsetWidth;
 pedidoActual.classList.add("confirmado");
 }
 
+/* =========================
+   ACTUALIZAR LISTA
+========================= */
+
 function actualizarLista(){
-const lista=document.getElementById("listaPedido");
+
+const lista = document.getElementById("listaPedido");
 lista.innerHTML="";
 
 if(pedidoGuardado.length===0){
@@ -135,12 +158,50 @@ lista.innerText="Aún no hay productos";
 return;
 }
 
-pedidoGuardado.forEach(p=>{
-const div=document.createElement("div");
-div.innerText=p;
-lista.appendChild(div);
+pedidoGuardado.forEach((p, index)=>{
+
+const contenedor = document.createElement("div");
+contenedor.style.background="#1e293b";
+contenedor.style.padding="12px";
+contenedor.style.borderRadius="12px";
+contenedor.style.marginBottom="10px";
+contenedor.style.position="relative";
+contenedor.style.whiteSpace="pre-line";
+
+const texto = document.createElement("div");
+texto.innerText = p;
+
+const btnEliminar = document.createElement("button");
+btnEliminar.innerText = "🗑";
+btnEliminar.style.position="absolute";
+btnEliminar.style.top="8px";
+btnEliminar.style.right="8px";
+btnEliminar.style.background="#ef4444";
+btnEliminar.style.border="none";
+btnEliminar.style.color="white";
+btnEliminar.style.borderRadius="8px";
+btnEliminar.style.padding="4px 8px";
+btnEliminar.style.cursor="pointer";
+
+btnEliminar.onclick = ()=>{
+mostrarModal("¿Eliminar este pedido?", (confirmado)=>{
+if(confirmado){
+pedidoGuardado.splice(index,1);
+actualizarLista();
+}
+});
+};
+
+contenedor.appendChild(texto);
+contenedor.appendChild(btnEliminar);
+lista.appendChild(contenedor);
+
 });
 }
+
+/* =========================
+   RESETEAR
+========================= */
 
 function resetear(){
 document.querySelectorAll(".numero").forEach(n=>{
@@ -148,6 +209,10 @@ document.querySelectorAll(".numero").forEach(n=>{
     animarNumero(n);
 });
 }
+
+/* =========================
+   BORRAR TODO
+========================= */
 
 function borrarPedido(){
 
@@ -163,6 +228,10 @@ actualizarLista();
 }
 });
 }
+
+/* =========================
+   WHATSAPP
+========================= */
 
 function enviarWhatsApp(){
 
@@ -183,6 +252,10 @@ setTimeout(()=>{
 window.open(`https://api.whatsapp.com/send?phone=${num2}&text=${encodeURIComponent(mensaje)}`,"_blank");
 },800);
 }
+
+/* =========================
+   MODAL PERSONALIZADO
+========================= */
 
 function mostrarModal(texto, callback){
 
