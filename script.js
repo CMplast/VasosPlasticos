@@ -293,7 +293,7 @@ totalGeneral += pedido.subtotal;
 
 /* SEPARADOR */
 mensaje+="----------------------------\n";
-mensaje+=`TOTAL GENERAL: ${totalGeneral} cajas\n`;
+mensaje+=`TOTAL DE CAJAS: ${totalGeneral} cajas\n`;
 mensaje+="----------------------------\n";
 
 const num1="5491134505374";
@@ -330,4 +330,5 @@ modal.classList.remove("activo");
 if(callback) callback(false);
 };
 }
+
 
