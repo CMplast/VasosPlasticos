@@ -40,7 +40,7 @@ div.innerHTML=`
 
 </div>
 
-<select class="tapaColor" data-default="${color}" style="padding:6px;border-radius:8px;border:1px solid #ccc;font-size:13px">
+<select class="tapaColor" data-default="${color}" style="display:none;padding:6px;border-radius:8px;border:1px solid #ccc;font-size:13px">
 ${opcionesTapa}
 </select>
 
@@ -61,24 +61,42 @@ crearColores();
 
 function sumar(btn){
 
-const num = btn.parentElement.querySelector(".numero");
+const item = btn.closest(".colorItem");
 
+const num = item.querySelector(".numero");
 num.innerText = parseInt(num.innerText)+1;
 
 animarNumero(num);
 
+/* mostrar selector de tapa */
+
+const select = item.querySelector(".tapaColor");
+
+if(parseInt(num.innerText) > 0){
+select.style.display = "block";
 }
 
+}
 function restar(btn){
 
-const num = btn.parentElement.querySelector(".numero");
+const item = btn.closest(".colorItem");
+
+const num = item.querySelector(".numero");
 let val = parseInt(num.innerText);
 
 if(val > 0){
 
-num.innerText = val - 1;
+val--;
+
+num.innerText = val;
 
 animarNumero(num);
+
+const select = item.querySelector(".tapaColor");
+
+if(val === 0){
+select.style.display = "none";
+}
 
 }
 
@@ -317,12 +335,11 @@ const numero = item.querySelector(".numero");
 numero.innerText = "0";
 animarNumero(numero);
 
-/* reset color tapa */
-
 const select = item.querySelector(".tapaColor");
 const defaultColor = select.dataset.default;
 
 select.value = defaultColor;
+select.style.display = "none";
 
 });
 
@@ -435,4 +452,5 @@ if(callback) callback(false);
 };
 
 }
+
 
