@@ -59,8 +59,17 @@ background:#f8f8f8;
 
 .colores{
 display:grid;
-grid-template-columns:1fr 1fr;
+grid-template-columns:1fr;
 gap:12px;
+}
+
+/* PC */
+@media (min-width:700px){
+
+.colores{
+grid-template-columns:1fr 1fr;
+}
+
 }
 
 .colorItem{
@@ -313,3 +322,4 @@ background:#ccc;
 background:#111;
 color:white;
 }
+
