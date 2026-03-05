@@ -208,10 +208,22 @@ bloque+="\n";
 
 }
 
-const color=item.querySelector("span").innerText;
-const tapaColor=item.querySelector(".tapaColor").value;
+const color = item.querySelector("span").innerText;
+const tapaColor = item.querySelector(".tapaColor").value;
+
+if(tipo === "Glitter"){
+
+bloque+=`• ${cant} cajas tapa ${color}\n`;
+
+}else if(tapa === ""){
+
+bloque+=`• ${cant} cajas ${color}\n`;
+
+}else{
 
 bloque+=`• ${cant} cajas ${color} - tapa ${tapaColor}\n`;
+
+}
 
 subtotal += cant;
 
@@ -480,6 +492,7 @@ if(callback) callback(false);
 };
 
 }
+
 
 
 
