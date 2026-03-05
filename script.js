@@ -40,7 +40,7 @@ div.innerHTML=`
 
 </div>
 
-<select class="tapaColor" style="padding:6px;border-radius:8px;border:1px solid #ccc;font-size:13px">
+<select class="tapaColor" data-default="${color}" style="padding:6px;border-radius:8px;border:1px solid #ccc;font-size:13px">
 ${opcionesTapa}
 </select>
 
@@ -311,10 +311,18 @@ lista.appendChild(totalDiv);
 
 function resetear(){
 
-document.querySelectorAll(".numero").forEach(n=>{
+document.querySelectorAll(".colorItem").forEach(item=>{
 
-n.innerText = "0";
-animarNumero(n);
+const numero = item.querySelector(".numero");
+numero.innerText = "0";
+animarNumero(numero);
+
+/* reset color tapa */
+
+const select = item.querySelector(".tapaColor");
+const defaultColor = select.dataset.default;
+
+select.value = defaultColor;
 
 });
 
@@ -427,3 +435,4 @@ if(callback) callback(false);
 };
 
 }
+
