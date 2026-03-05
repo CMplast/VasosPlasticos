@@ -55,6 +55,32 @@ cont.appendChild(div);
 
 crearColores();
 
+function controlarModoGlitter(){
+
+const tipo = document.querySelector(".tipo").value;
+
+document.querySelectorAll(".tapaColor").forEach(select=>{
+
+if(tipo === "Glitter"){
+
+select.style.display = "none";
+
+}else{
+
+/* solo mostrar si hay cajas */
+const item = select.closest(".colorItem");
+const cantidad = parseInt(item.querySelector(".numero").innerText);
+
+if(cantidad > 0){
+select.style.display = "block";
+}
+
+}
+
+});
+
+}
+
 /* =========================
    SUMAR / RESTAR
 ========================= */
@@ -452,5 +478,6 @@ if(callback) callback(false);
 };
 
 }
+
 
 
