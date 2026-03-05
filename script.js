@@ -34,13 +34,48 @@ cont.appendChild(div);
 crearColores();
 
 /* =========================
+   CARGAR COLORES TAPA
+========================= */
+
+function cargarColoresTapa(){
+
+const select = document.getElementById("colorTapa");
+
+if(!select) return;
+
+colores.forEach(color=>{
+const op = document.createElement("option");
+op.value = color;
+op.textContent = color;
+select.appendChild(op);
+});
+
+}
+
+cargarColoresTapa();
+
+/* =========================
    SUMAR / RESTAR
 ========================= */
 
 function sumar(btn){
-const num = btn.parentElement.querySelector(".numero");
+
+const item = btn.closest(".colorItem");
+const color = item.querySelector("span").innerText;
+
+const num = item.querySelector(".numero");
 num.innerText = parseInt(num.innerText)+1;
+
 animarNumero(num);
+
+/* AUTO COLOR TAPA */
+
+const selectTapa = document.getElementById("colorTapa");
+
+if(selectTapa && selectTapa.value === ""){
+selectTapa.value = color;
+}
+
 }
 
 function restar(btn){
@@ -105,6 +140,7 @@ let subtotal = 0;
 const tam = document.getElementById("tamano").value;
 const tipo = document.querySelector(".tipo").value;
 const tapa = document.getElementById("tapaSelect").value;
+const colorTapa = document.getElementById("colorTapa")?.value || "";
 
 document.querySelectorAll(".colorItem").forEach(item=>{
 const cant = parseInt(item.querySelector(".numero").innerText);
@@ -113,8 +149,13 @@ if(cant > 0){
 
 if(bloque===""){
 bloque+=`Vasos ${tam}ml`;
+
 if(tipo!=="Comun") bloque+=` (${tipo})`;
+
 if(tapa) bloque+=` - ${tapa}`;
+
+if(colorTapa) bloque+=` (${colorTapa})`;
+
 bloque+="\n";
 }
 
@@ -139,6 +180,7 @@ actualizarLista();
 resetear();
 
 /* Scroll suave */
+
 const pedidoActual = document.querySelector(".pedidoActual");
 
 window.scrollTo({
@@ -147,6 +189,7 @@ window.scrollTo({
 });
 
 /* Animación confirmación */
+
 pedidoActual.classList.remove("confirmado");
 void pedidoActual.offsetWidth;
 pedidoActual.classList.add("confirmado");
@@ -242,10 +285,18 @@ lista.appendChild(totalDiv);
 ========================= */
 
 function resetear(){
+
 document.querySelectorAll(".numero").forEach(n=>{
-    n.innerText = "0";
-    animarNumero(n);
+n.innerText = "0";
+animarNumero(n);
 });
+
+const selectTapa = document.getElementById("colorTapa");
+
+if(selectTapa){
+selectTapa.value="";
+}
+
 }
 
 /* =========================
@@ -291,7 +342,6 @@ totalGeneral += pedido.subtotal;
 
 });
 
-/* SEPARADOR */
 mensaje+="----------------------------\n";
 mensaje+=`TOTAL DE CAJAS: ${totalGeneral} cajas\n`;
 mensaje+="----------------------------\n";
@@ -329,6 +379,6 @@ btnCancelar.onclick = () => {
 modal.classList.remove("activo");
 if(callback) callback(false);
 };
-}
 
+}
 
