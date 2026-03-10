@@ -99,8 +99,9 @@ animarNumero(num);
 const select = item.querySelector(".tapaColor");
 
 const tipo = document.querySelector(".tipo").value;
+const tapa = document.getElementById("tapaSelect").value;
 
-if(parseInt(num.innerText) > 0 && tipo !== "Glitter"){
+if(parseInt(num.innerText) > 0 && tipo !== "Glitter" && tapa !== ""){
 select.style.display = "block";
 }
 
@@ -492,6 +493,7 @@ if(callback) callback(false);
 };
 
 }
+
 
 
 
