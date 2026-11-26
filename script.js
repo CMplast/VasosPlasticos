@@ -4,6 +4,15 @@ const colores = [
 "Naranja Fluo","Violeta Fluo","Verde pastel","Violeta pastel",
 "Rosa pastel","Celeste pastel"
 ];
+const colores750 = [
+"Blanco",
+"Negro",
+"Rosa",
+"Rojo",
+"Azul",
+"Natural",
+"Glitter"
+];
 
 let pedidoGuardado = [];
 
@@ -11,48 +20,49 @@ let pedidoGuardado = [];
    CREAR COLORES
 ========================= */
 
-function crearColores(){
+function crearColores(listaColores = colores){
 
-const cont = document.getElementById("coloresUnico");
+    const cont = document.getElementById("coloresUnico");
 
-colores.forEach(color=>{
+    cont.innerHTML = "";
 
-const opcionesTapa = colores.map(c=>{
-return `<option value="${c}" ${c===color ? "selected":""}>${c}</option>`
-}).join("");
+    listaColores.forEach(color=>{
 
-const div = document.createElement("div");
-div.className="colorItem";
+        const opcionesTapa = colores.map(c=>{
+            return `<option value="${c}" ${c===color ? "selected":""}>${c}</option>`
+        }).join("");
 
-div.innerHTML=`
+        const div = document.createElement("div");
+        div.className="colorItem";
 
-<div style="display:flex;flex-direction:column;width:100%;gap:6px">
+        div.innerHTML=`
 
-<div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;flex-direction:column;width:100%;gap:6px">
 
-<span>${color}</span>
+            <div style="display:flex;justify-content:space-between;align-items:center">
 
-<div class="contador">
-<button onclick="restar(this)">-</button>
-<span class="numero">0</span>
-<button onclick="sumar(this)">+</button>
-</div>
+                <span>${color}</span>
 
-</div>
+                <div class="contador">
+                    <button onclick="restar(this)">-</button>
+                    <span class="numero">0</span>
+                    <button onclick="sumar(this)">+</button>
+                </div>
 
-<select class="tapaColor" data-default="${color}" style="display:none;padding:6px;border-radius:8px;border:1px solid #ccc;font-size:13px">
-${opcionesTapa}
-</select>
+            </div>
 
-</div>
-`;
+            <select class="tapaColor" data-default="${color}" style="display:none;padding:6px;border-radius:8px;border:1px solid #ccc;font-size:13px">
+                ${opcionesTapa}
+            </select>
 
-cont.appendChild(div);
+        </div>
+        `;
 
-});
+        cont.appendChild(div);
+
+    });
 
 }
-
 crearColores();
 
 function controlarModoGlitter(){
@@ -101,7 +111,7 @@ const select = item.querySelector(".tapaColor");
 const tipo = document.querySelector(".tipo").value;
 const tapa = document.getElementById("tapaSelect").value;
 
-if(parseInt(num.innerText) > 0 && tipo !== "Glitter" && tapa !== ""){
+if(parseInt(num.innerText) > 0 && document.getElementById("tamano").value !== "750" && tipo !== "Glitter" && tapa !== ""){   
 select.style.display = "block";
 }
 
@@ -156,22 +166,28 @@ function cambiarTapa(){
 
     const tam = document.getElementById("tamano").value;
     const tapa = document.getElementById("tapaSelect");
+    const tipo = document.querySelector(".tipo");
 
-    // 750cc no utiliza tapas
+    // CONFIGURACIÓN 750CC
     if(tam === "750"){
+
+        tipo.style.display = "none";
+        tipo.value = "Comun";
 
         tapa.style.display = "none";
         tapa.value = "";
 
-        document.querySelectorAll(".tapaColor").forEach(select=>{
-            select.style.display = "none";
-        });
+        crearColores(colores750);
 
         return;
     }
 
-    // Mostrar selector para los otros tamaños
+    // CONFIGURACIÓN 400CC Y 500CC
+    tipo.style.display = "block";
     tapa.style.display = "block";
+
+    crearColores(colores);
+
     tapa.innerHTML = "";
 
     if(tam === "400"){
@@ -193,7 +209,6 @@ function cambiarTapa(){
     }
 
 }
-
 /* =========================
    GUARDAR PEDIDO
 ========================= */
@@ -228,9 +243,13 @@ bloque+="\n";
 const color = item.querySelector("span").innerText;
 const tapaColor = item.querySelector(".tapaColor").value;
 
-if(tipo === "Glitter"){
+if(tam === "750"){
 
-bloque+=`• ${cant} cajas tapa ${color}\n`;
+    bloque+=`• ${cant} cajas ${color}\n`;
+
+}else if(tipo === "Glitter"){
+
+    bloque+=`• ${cant} cajas tapa ${color}\n`;
 
 }else if(tapa === ""){
 
