@@ -215,8 +215,8 @@ if(cant > 0){
 
 if(bloque===""){
 
-bloque+=`Vasos ${tam}ml`;
-
+bloque+= tam === "750" ? "Vasos 750cc" : `Vasos ${tam}ml`;
+   
 if(tipo!=="Comun") bloque+=` (${tipo})`;
 
 if(tapa) bloque+=` - ${tapa}`;
