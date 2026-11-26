@@ -182,9 +182,17 @@ function cambiarTapa(){
         return;
     }
 
-    // CONFIGURACIÓN 400CC Y 500CC
-    tipo.style.display = "block";
-    tapa.style.display = "block";
+   // CONFIGURACIÓN 400CC Y 500CC
+tipo.style.display = "block";
+tapa.style.display = "block";
+
+// Estampado solamente para 500cc
+const estampado = tipo.querySelector(".solo500");
+estampado.style.display = tam === "500" ? "block" : "none";
+
+if(tam === "400" && tipo.value === "Estampado"){
+    tipo.value = "Comun";
+}
 
     crearColores(colores);
 
