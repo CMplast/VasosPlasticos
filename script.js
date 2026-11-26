@@ -151,30 +151,46 @@ num.classList.add("animar");
    CAMBIAR TAPA TIPO
 ========================= */
 
+
 function cambiarTapa(){
 
-const tam = document.getElementById("tamano").value;
-const tapa = document.getElementById("tapaSelect");
+    const tam = document.getElementById("tamano").value;
+    const tapa = document.getElementById("tapaSelect");
 
-tapa.innerHTML="";
+    // 750cc no utiliza tapas
+    if(tam === "750"){
 
-if(tam==="400"){
+        tapa.style.display = "none";
+        tapa.value = "";
 
-tapa.innerHTML=`
-<option value="">Sin tapa</option>
-<option value="Tapa lisa">Tapa lisa</option>
-<option value="Tapa domo">Tapa domo</option>
-<option value="Tapa pelota">Tapa pelota</option>
-`;
+        document.querySelectorAll(".tapaColor").forEach(select=>{
+            select.style.display = "none";
+        });
 
-}else{
+        return;
+    }
 
-tapa.innerHTML=`
-<option value="">Sin tapa</option>
-<option value="Tapa plana">Tapa plana</option>
-`;
+    // Mostrar selector para los otros tamaños
+    tapa.style.display = "block";
+    tapa.innerHTML = "";
 
-}
+    if(tam === "400"){
+
+        tapa.innerHTML = `
+        <option value="">Sin tapa</option>
+        <option value="Tapa lisa">Tapa lisa</option>
+        <option value="Tapa domo">Tapa domo</option>
+        <option value="Tapa pelota">Tapa pelota</option>
+        `;
+
+    }else{
+
+        tapa.innerHTML = `
+        <option value="">Sin tapa</option>
+        <option value="Tapa plana">Tapa plana</option>
+        `;
+
+    }
 
 }
 
